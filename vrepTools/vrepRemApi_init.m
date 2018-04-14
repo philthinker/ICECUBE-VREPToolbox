@@ -16,6 +16,8 @@ vrep.simxFinish(-1);            % Stop other connections
 clientID = vrep.simxStart('127.0.0.1',19997,true,true,6000,5);  % Connect to V-REP
 % Attention! port number '19997' is not trivial. It's for the continuous
 % operation mode. See remoteApiConnections.txt for details.
+% If you want temporary operation mode, change the port number '19997' to 
+% a larger one.
 
 if clientID > -1    % Connected!
     disp('Connected!');

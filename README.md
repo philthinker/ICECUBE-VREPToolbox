@@ -10,7 +10,7 @@ A toolbox designed for V-REP remote API (MATLAB)
 
 The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applications development. However, it is still under development.
 
-# Attributions
+# Attributes
 
  - The toolbox has been tested on MATLAB2016b together with V-REP PRO EDU 3.5.0 (Windows 10 x64).
 
