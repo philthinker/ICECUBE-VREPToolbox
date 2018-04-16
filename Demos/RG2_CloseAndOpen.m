@@ -1,19 +1,33 @@
-% UR5_PickAndPlace
-% A demo to show how to control UR5 together with RG2 to pick and place.
+% RG2_CloseAndOpen
+% A demo to show how to control RG2
 % Haopeng Hu
-% 2018.04.16
+% 2018.04.14
 
-% V-REP scene: UR5plusRG2_PickAndPlace.ttt
-
+% V-REP scene: UR5plusRG2.ttt
+% Never forget to add the path 'vrepTools' in your MATLAB workspace.
 % addpath('vrepTools');
-% addpath('robotTools\UR5VREPTools');
 
 vrepRemApi_init;
 
-%% Get the UR5's handles
+%% Get the UR's handles
 handles = struct('ID',clientID);
 
-vrepGetUR5Handles;
+% Get the UR5's joints' handles
+jointNames = {'UR5_joint1','UR5_joint2','UR5_joint3',...
+    'UR5_joint4','UR5_joint5','UR5_joint6'};
+ur5Joints = zeros(1,6);
+for i = 1:6     
+    [res, ur5Joints(i)] = vrep.simxGetObjectHandle(clientID, ...
+        jointNames{i},vrep.simx_opmode_blocking);   % blocking mode
+    vrchk(vrep,res);
+end
+handles.ur5Joints = ur5Joints;
+
+% Get the UR5's handle
+[res, ur5Ref] = vrep.simxGetObjectHandle(clientID,...
+    'UR5',vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+handles.ur5Ref = ur5Ref;
 %% Get the gripper's handle
 [res, rg2Ref] = vrep.simxGetObjectHandle(clientID,...
     'RG2',vrep.simx_opmode_blocking);
