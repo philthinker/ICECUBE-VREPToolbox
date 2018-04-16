@@ -4,6 +4,7 @@
 % 2018.04.14
 
 % V-REP scene: UR5plusRG2.ttt
+% Never forget to add the path 'vrepTools' in your MATLAB workspace.
 
 vrepRemApi_init;
 
@@ -35,12 +36,30 @@ handles.rg2Ref = rg2Ref;
 res = vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking);
 disp('Simulation Started!');
 vrchk(vrep,res);
-%% 
-
+%% Move UR5
+% Rotate UR5_joint5
+for deg = 0:-0.02:-pi/2
+   vrep.simxSetJointTargetPosition(clientID, handles.ur5Joints(5),deg,vrep.simx_opmode_oneshot); 
+   pause(0.05);
+end
 %% Close the RG2
 [res, retInts, retFloats, retStrings, retBuffer] = vrep.simxCallScriptFunction(clientID, 'RG2',...
-    vrep.sim_scripttype_childscript,'rg2Close',1,[],[],[],vrep.simx_opmode_blocking);
+    vrep.sim_scripttype_childscript,'rg2Close',0,[],[],[],vrep.simx_opmode_blocking);
 vrchk(vrep,res);
+disp('RG2 closed');
+% disp(retFloats);
+%% Move UR5
+% Rotate UR5_joint5
+for deg = -pi/2:0.02:0
+   vrep.simxSetJointTargetPosition(clientID, handles.ur5Joints(5),deg,vrep.simx_opmode_oneshot); 
+   pause(0.05);
+end
+%% Open the RG2
+[res, retInts, retFloats, retStrings, retBuffer] = vrep.simxCallScriptFunction(clientID, 'RG2',...
+    vrep.sim_scripttype_childscript,'rg2Open',[],[],[],[],vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+disp('RG2 opened');
+% disp(retFloats);
 %% Clean the vrep threads and shut down the program
 vrep.simxFinish(clientID);
 vrep.delete();

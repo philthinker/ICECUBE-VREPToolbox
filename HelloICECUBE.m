@@ -5,6 +5,8 @@
 % Haopeng Hu
 % 2018.04.11
 
+addpath('vrepTools');
+
 vrepRemApi_init
 
 % V-REP service is ready, go ahead
