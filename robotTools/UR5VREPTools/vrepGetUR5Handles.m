@@ -3,6 +3,9 @@
 % Haopeng Hu
 % 2018.04.16
 
+% handles.ur5Joints: handles of joints of UR5
+% handles.ur5Ref: handle of UR5
+
 % Make sure you have run 'vrepTools\vrepRemApi_init.m' in advance.
 
 %% Get the UR5's joints' handles
