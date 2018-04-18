@@ -101,6 +101,7 @@ function sysCall_threadmain(  )
     --rem_rmlMoveToJointPositions({},initialConfig,{},'')
     --sim.wait(1)
 
+    --[[
     rem_rmlMoveToJointPositions({},startConfig,{},'')
     local temp_pos = sim.getObjectPosition(ikTip, -1)
     local temp_qua = sim.getObjectQuaternion(ikTip, -1)
@@ -109,10 +110,11 @@ function sysCall_threadmain(  )
     rem_rmlMoveToPosition({},{temp_pos[1], temp_pos[2]-0.2, temp_pos[3]+0.2,temp_qua[1], temp_qua[2], temp_qua[3], temp_qua[4]},{},'')
     sim.wait(1)
     rem_rmlMoveToJointPositions({},initialConfig,{},'')
+    ]]
 
-    --while true do
+    while true do
         -- Just hold the thread
-    --end
+    end
 
     sim.stopSimulation()
 end

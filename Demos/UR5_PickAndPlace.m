@@ -44,6 +44,22 @@ pause(5)
 tempjpos = deg2rad([-70.1, 18.85, 93.18, 68.02, 109.9, 90]);
 res = simx_rmlMoveToJointPositions(vrep,clientID,vrep.simx_opmode_blocking,tempjpos);
 vrchk(vrep,res);
+pause(2);
+%% Move by ik group
+[res, temppos] = vrep.simxGetObjectPosition(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+[res, tempqua] = vrep.simxGetObjectQuaternion(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+
+temppos(2) = temppos(2) - 0.2;
+res = simx_rmlMoveToPosition(vrep,clientID, vrep.simx_opmode_blocking,temppos,tempqua);
+vrchk(vrep,res);
+pause(2);
+
+temppos(3) = temppos(3) + 0.2;
+res = simx_rmlMoveToPosition(vrep,clientID, vrep.simx_opmode_blocking,temppos,tempqua);
+vrchk(vrep,res);
+pause(2);
 %% Close the RG2
 res = simx_rg2Close(vrep,clientID,vrep.simx_opmode_blocking);
 vrchk(vrep,res);

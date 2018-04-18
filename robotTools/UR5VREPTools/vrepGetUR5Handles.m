@@ -5,6 +5,7 @@
 
 % handles.ur5Joints: handles of joints of UR5
 % handles.ur5Ref: handle of UR5
+% handles.ur5ikTip: handle of UR5' ikTip
 
 % Make sure you have run 'vrepTools\vrepRemApi_init.m' in advance.
 
@@ -23,3 +24,7 @@ handles.ur5Joints = ur5Joints;
     'UR5',vrep.simx_opmode_blocking);
 vrchk(vrep,res);
 handles.ur5Ref = ur5Ref;
+%% Get the UR5's ikTip's handle
+[res, ur5ikTip] = vrep.simxGetObjectHandle(clientID,'UR5_ikTip',vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+handles.ur5ikTip = ur5ikTip;
