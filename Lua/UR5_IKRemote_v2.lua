@@ -18,11 +18,14 @@ enableIk=function(enable)
     end
 end
 
-rem_rmlMoveToJointPositions = function(inInts,inFloats,inStrings,inBuffer)
-    local targetPos = {0, 0, 0, 0, 0, 0}    -- rad
+rem_rmlMoveToJointPositions = function(inFloats)   -- rad
+    local targetPos = {0,0,0,0,0,0}
     if #inFloats>=6 then
-        --sim.addStatusbarMessage('Compatible Message Received!')
         for i = 1,6,1 do
+            targetPos[i] = inFloats[i]
+        end
+    else
+        for i = 1,#inFloats,1 do
             targetPos[i] = inFloats[i]
         end
     end
@@ -31,13 +34,12 @@ rem_rmlMoveToJointPositions = function(inInts,inFloats,inStrings,inBuffer)
         sim.setIntegerSignal('IKEnable', 0)
     end
     if sim.getSimulationState() ~= sim.simulation_advancing_abouttostop then
-        sim.rmlMoveToJointPositions(jointHandles,-1,currentVel,currentAccel,maxVel,maxAccel,maxJerk,targetPos,targetVel)
-        --print('maxVel:'..maxVel[1])
+        local res = sim.rmlMoveToJointPositions(jointHandles,-1,currentVel,currentAccel,maxVel,maxAccel,maxJerk,targetPos,targetVel)
     end
-    return {},{},{},''
+    return res 
 end
 
-rem_rmlMoveToPosition = function(inInts,inFloats,inStrings,inBuffer)
+rem_rmlMoveToPosition = function(inFloats)
     local targetPos = sim.getObjectPosition(ikTip, -1)
     local targetQua = sim.getObjectQuaternion(ikTip, -1)
     if #inFloats>=7 then
@@ -47,19 +49,22 @@ rem_rmlMoveToPosition = function(inInts,inFloats,inStrings,inBuffer)
         for i = 1,4,1 do
             targetQua[i] = inFloats[i+3]
         end
+    else
+        print('There should be 7 elements in the desired configuration!')
     end
     if sim.getIntegerSignal('IKEnable') ~= 1 then
         enableIk(true)
         sim.setIntegerSignal('IKEnable', 1)
     end
     if sim.getSimulationState() ~= sim.simulation_advancing_abouttostop then
-        sim.rmlMoveToPosition(ikTarget, -1, -1, nil, nil, ikMaxVel, ikMaxAccel, ikMaxJerk, targetPos, targetQua, nil)
+        local res = sim.rmlMoveToPosition(ikTarget, -1, -1, nil, nil, ikMaxVel, ikMaxAccel, ikMaxJerk, targetPos, targetQua, nil)
     end
-    return {},{},{},''
+    return res
 end
 
 function sysCall_threadmain(  )
     sim.setThreadSwitchTiming(100)
+    sim.setIntegerSignal('ClientRunning', 0)
     -- Initialize some values:
     jointHandles={-1,-1,-1,-1,-1,-1}
     for i=1,6,1 do
@@ -88,6 +93,7 @@ function sysCall_threadmain(  )
     
 
     sim.setIntegerSignal('IKEnable', 0)         -- The sign for ik mechanism
+    sim.setIntegerSignal('ClientRunning',1)     -- the sign for client applications
     sim.addStatusbarMessage('The UR5 is ready to move!')
     
     while true do

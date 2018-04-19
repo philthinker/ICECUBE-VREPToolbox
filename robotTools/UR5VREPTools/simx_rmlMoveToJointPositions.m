@@ -6,7 +6,7 @@ function [ res ] = simx_rmlMoveToJointPositions( vrep, clientID, simx_opmode, ta
 % targetPos: 1 x 6 vector, the target joint positions
 % res: the return code, you can use 'vrepTools\vrchk' to check it
 
-% 'Lua\UR5IKRemote.lua' is required
+% 'Lua\UR5IKRemote_v1.lua' is required
 
 [res, retInts, retFloats, retStrings, retBuffer] = vrep.simxCallScriptFunction(clientID, 'UR5',...
     vrep.sim_scripttype_childscript, 'rem_rmlMoveToJointPositions',[],targetPos,[],[],simx_opmode);

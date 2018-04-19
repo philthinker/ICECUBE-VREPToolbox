@@ -27,3 +27,7 @@ Just clone the master branch anywhere you want.
  1. Open the "UR5plusRG2" scene.
 
  2. Run "HelloICECUBE.m".
+
+ See 'Demos' for more demos.
+
+ Enjoy it for your cool summer!

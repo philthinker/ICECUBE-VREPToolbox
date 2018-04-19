@@ -7,3 +7,4 @@
 
 addpath('vrepTools');
 addpath('robotTools\UR5VREPTools');
+addpath('robotTools\RG2VREPTools');

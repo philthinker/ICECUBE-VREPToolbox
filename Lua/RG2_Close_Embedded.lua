@@ -1,16 +1,16 @@
 -- Non-Threaded Child Script
 
 -- Attach these scripts to RG2 in V-REP scene "UR5plusRG2_PickAndPlace.ttt"
--- Use these scripts for the Pick-and-Place demo if you wanna use embedded scripts only
+-- Use these scripts for the Pick-and-Place demo
 
-rg2Close = function(inInts,inFloats,inStrings,inBuffer)
+rg2Close = function()
     local v = -motorVelocity
     sim.setJointForce(motorHandle,motorForce)
     sim.setJointTargetVelocity(motorHandle,v)
     return {},{v},{},''
 end
 
-rg2Open = function(inInts,inFloats,inStrings,inBuffer)
+rg2Open = function()
     local v = motorVelocity
     sim.setJointForce(motorHandle,motorForce)
     sim.setJointTargetVelocity(motorHandle,v)
@@ -28,8 +28,8 @@ function sysCall_actuation( )
     -- Hear from UR5_PickAndPlace_Demo
     local rg2Sign = sim.getIntegerSignal('RG2Close')
     if rg2Sign ~= 0 then
-        rg2Close({}, {}, {}, '')
+        rg2Close()
     else
-        rg2Open({}, {}, {}, '')
+        rg2Open()
     end
 end

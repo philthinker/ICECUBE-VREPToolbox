@@ -4,6 +4,7 @@
 % 2018.04.16
 
 % V-REP scene: UR5plusRG2_PickAndPlace.ttt
+% It is not recommanded to use this demo. Try UR5_PickAndPlace_v2.m instead
 
 % addpath('vrepTools');
 % addpath('robotTools\UR5VREPTools');

@@ -7,7 +7,7 @@ function [ res ] = simx_rmlMoveToPosition( vrep, clientID, simx_opmode, targetPo
 % targetQua: 1 x 4 vector, the target quaternion
 % res: the return code, you can use 'vrepTools\vrchk' to check it
 
-% 'Lua\UR5IKRemote.lua' is required
+% 'Lua\UR5IKRemote_v1.lua' is required
 
 [res,resInts, resFloats, resStrings, resBuffer] = vrep.simxCallScriptFunction(clientID, 'UR5', ...
     vrep.sim_scripttype_childscript, 'rem_rmlMoveToPosition', [], [targetPos,targetQua], [], [], simx_opmode);
