@@ -1,4 +1,4 @@
--- No Threaded Child Script
+-- Non-Threaded Child Script
 
 -- Attach these scripts to RG2 in V-REP scene "UR5plusRG2.ttt"
 

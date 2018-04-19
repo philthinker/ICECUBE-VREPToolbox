@@ -70,9 +70,6 @@ function sysCall_threadmain(  )
     ikTarget=sim.getObjectHandle('UR5_ikTarget')
 
     -- Set-up some of the RML vectors:
-    --vel=180
-    --accel=40
-    --jerk=80
     vel = 100
     accel = 20
     jerk = 40
@@ -92,26 +89,7 @@ function sysCall_threadmain(  )
 
     sim.setIntegerSignal('IKEnable', 0)         -- The sign for ik mechanism
     sim.addStatusbarMessage('The UR5 is ready to move!')
-    --sim.setIntegerSignal('ClientRunning', 1)    -- The sign for remote client state
     
-    startConfig={-70.1*math.pi/180,18.85*math.pi/180,93.18*math.pi/180,68.02*math.pi/180,109.9*math.pi/180,90*math.pi/180}
-
-    --rem_rmlMoveToJointPositions({},startConfig,{},'')
-    --sim.wait(1)
-    --rem_rmlMoveToJointPositions({},initialConfig,{},'')
-    --sim.wait(1)
-
-    --[[
-    rem_rmlMoveToJointPositions({},startConfig,{},'')
-    local temp_pos = sim.getObjectPosition(ikTip, -1)
-    local temp_qua = sim.getObjectQuaternion(ikTip, -1)
-    rem_rmlMoveToPosition({},{temp_pos[1], temp_pos[2]-0.2, temp_pos[3],temp_qua[1], temp_qua[2], temp_qua[3], temp_qua[4]},{},'')
-    sim.wait(1)
-    rem_rmlMoveToPosition({},{temp_pos[1], temp_pos[2]-0.2, temp_pos[3]+0.2,temp_qua[1], temp_qua[2], temp_qua[3], temp_qua[4]},{},'')
-    sim.wait(1)
-    rem_rmlMoveToJointPositions({},initialConfig,{},'')
-    ]]
-
     while true do
         -- Just hold the thread
     end

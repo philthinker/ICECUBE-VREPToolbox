@@ -51,19 +51,36 @@ vrchk(vrep,res);
 [res, tempqua] = vrep.simxGetObjectQuaternion(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
 vrchk(vrep,res);
 
-temppos(2) = temppos(2) - 0.2;
-res = simx_rmlMoveToPosition(vrep,clientID, vrep.simx_opmode_blocking,temppos,tempqua);
-vrchk(vrep,res);
-pause(2);
-
-temppos(3) = temppos(3) + 0.2;
-res = simx_rmlMoveToPosition(vrep,clientID, vrep.simx_opmode_blocking,temppos,tempqua);
-vrchk(vrep,res);
-pause(2);
-%% Close the RG2
-res = simx_rg2Close(vrep,clientID,vrep.simx_opmode_blocking);
-vrchk(vrep,res);
-pause(5);
+toys = -1*ones(1,3);
+for i = 1:3
+    [res, toys(i)] = vrep.simxGetObjectHandle(clientID, strcat('HaopengToy0',num2str(i)),vrep.simx_opmode_blocking);
+    vrchk(vrep,res);
+end
+[res, targetQua] = vrep.simxGetObjectQuaternion(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
+    vrchk(vrep, res);
+for i = 1:2
+    [res, toyPos] = vrep.simxGetObjectPosition(clientID,toys(i),-1,vrep.simx_opmode_blocking);
+    vrchk(vrep,res);
+    targetPos = toyPos; targetPos(3) = targetPos(3)+0.3;
+    targetPos
+    res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
+    targetPos = toyPos;
+    res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
+    res = simx_rg2Close(vrep,clientID,vrep.simx_opmode_blocking); vrchk(vrep, res);
+    pause(5);
+    targetPos(3) = targetPos(3)+0.1+0.03*(i-1);
+    res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
+    pause(1)
+    targetPos(2) = targetPos(2)+0.3;
+    res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
+    targetPos(3) = targetPos(3) -0.1 -0.06*i;
+    res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
+    res = simx_rg2Open(vrep,clientID,vrep.simx_opmode_blocking); vrchk(vrep, res);
+    pause(5)
+    targetPos(3) = targetPos(3) + 0.1 + 0.06*i;
+    res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
+end
+    
 %% Move to initial joint positions
 tempjpos = zeros(1,6);
 res = simx_rmlMoveToJointPositions(vrep,clientID,vrep.simx_opmode_blocking,tempjpos);

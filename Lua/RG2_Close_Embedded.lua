@@ -1,4 +1,4 @@
--- Non Threaded Child Script
+-- Non-Threaded Child Script
 
 -- Attach these scripts to RG2 in V-REP scene "UR5plusRG2_PickAndPlace.ttt"
 -- Use these scripts for the Pick-and-Place demo if you wanna use embedded scripts only

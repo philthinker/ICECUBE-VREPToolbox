@@ -1,4 +1,5 @@
 -- This is a threaded script.
+-- You can attach the script to 'UR5' in V-REP scene 'UR5plusRG2_ik'
 
 enableIk=function(enable)
     if enable then
