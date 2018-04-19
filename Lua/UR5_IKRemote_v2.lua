@@ -93,11 +93,45 @@ function sysCall_threadmain(  )
     
 
     sim.setIntegerSignal('IKEnable', 0)         -- The sign for ik mechanism
+    
+    -- The ICECUBE Communication Protocol
+    sim.setIntegerSignal('ICECUBE_0', 0)
+    sim.setFloatSignal('ICECUBE_1', 0.00)
+    sim.setFloatSignal('ICECUBE_2', 0.00)
+    sim.setFloatSignal('ICECUBE_3', 0.00)
+    sim.setFloatSignal('ICECUBE_4', 0.00)
+    sim.setFloatSignal('ICECUBE_5', 0.00)
+    sim.setFloatSignal('ICECUBE_6', 0.00)
+    sim.setFloatSignal('ICECUBE_7', 0.00)
+    local rmlJoints = {0, 0, 0, 0, 0, 0}
+    local rmlPosQua = {0, 0, 0, 0, 0, 0, 0} 
+
     sim.setIntegerSignal('ClientRunning',1)     -- the sign for client applications
     sim.addStatusbarMessage('The UR5 is ready to move!')
+
+    
     
     while true do
-        -- Just hold the thread
+        -- The ICECUBE Communication Protocol 
+        local icecube_sign = sim.getIntegerSignal('ICECUBE_0')
+        if icecube_sign == 0 then
+            -- Nothing to do, pass
+            sim.wait(0.2)
+        elseif icecube_sign == 1 then
+            -- Joint Motion 
+            for i = 1,6,1 do
+                rmlJoints[i] = sim.getFloatSignal('ICECUBE_'..i)
+            end
+            local res = rem_rmlMoveToJointPositions(rmlJoints)
+            if res == 1 then
+                sim.setIntegerSignal('ICECUBE_0', 0)
+            end
+        elseif icecube_sign == 2 then
+            -- Cartesian Motion
+        elseif icecube_sign == 3 then
+            -- Stop Simulation
+            break
+        end
     end
 
     sim.stopSimulation()

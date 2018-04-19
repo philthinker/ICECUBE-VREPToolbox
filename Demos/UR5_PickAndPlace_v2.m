@@ -6,7 +6,7 @@
 % V-REP scene: UR5plusRG2_PickAndPlace.ttt
 
 % Never forget to run 'ICECUBE_init.m' firstly. 
-
+TIMEOUT = 1000;
 %% Initialize the simulation
 vrepRemApi_init;
 vrep.simxAddStatusbarMessage(clientID, 'MATLAB client is connected!', vrep.simx_opmode_oneshot);
@@ -26,11 +26,11 @@ disp('All handles have been gotten.');
 res = vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking);
 disp('Simulation Started!');
 vrchk(vrep,res);
-while i < 500 && vrep.simxGetIntegerSignal(clientID,'ClientRunning',vrep.simx_opmode_blocking) == 1
+while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID,'ClientRunning',vrep.simx_opmode_blocking) == 1
     i = i + 1;
     pause(0.1);
 end
-if i>= 1000
+if i>= TIMEOUT
     disp('An error occurred in your UR5 thread');
     vrep.simxFinish(clientID);
     vrep.delete();
@@ -40,18 +40,20 @@ else
 end
 
 %% Open the RG2
-res = sim_rg2Open(vrep, clientID, vrep.simx_opmode_blocking);
-vrchk(vrep,res);
-pause(5)
-res = sim_rg2Close(vrep, clientID, vrep.simx_opmode_blocking);
-vrchk(vrep,res);
-pause(5)
-%% Move to target joint positions
-% tempjpos = deg2rad([-70.1, 18.85, 93.18, 68.02, 109.9, 90]);
-% res = simx_rmlMoveToJointPositions(vrep,clientID,vrep.simx_opmode_blocking,tempjpos);
+% res = sim_rg2Open(vrep, clientID, vrep.simx_opmode_blocking);
 % vrchk(vrep,res);
-% pause(2);
-
+% pause(5)
+% res = sim_rg2Close(vrep, clientID, vrep.simx_opmode_blocking);
+% vrchk(vrep,res);
+% pause(5)
+%% Move to target joint positions
+tempjpos = deg2rad([-70.1, 18.85, 93.18, 68.02, 109.9, 90]);
+sim_rmlMoveToJointPositions(vrep,clientID,tempjpos);
+pause(2);
+while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+    i = i + 1;
+    pause(0.1);
+end
 %% Move by ik group
 % [res, temppos] = vrep.simxGetObjectPosition(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
 % vrchk(vrep,res);
@@ -84,12 +86,15 @@ pause(5)
 % end
     
 %% Move to initial joint positions
-% tempjpos = zeros(1,6);
-% res = simx_rmlMoveToJointPositions(vrep,clientID,vrep.simx_opmode_blocking,tempjpos);
-% vrchk(vrep,res);
+tempjpos = zeros(1,6);
+sim_rmlMoveToJointPositions(vrep,clientID,tempjpos);
+pause(2);
+while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+    i = i + 1;
+    pause(0.1);
+end
 %% Clean the vrep threads and shut down the program
-%res = vrep.simxSetIntegerSignal(clientID,'ClientRunning',0,vrep.simx_opmode_blocking);
-%vrchk(vrep,res);
+vrep.simxSetIntegerSignal(clientID, 'ICECUBE_0', 3, vrep.simx_opmode_blocking);
 vrep.simxFinish(clientID);
 vrep.delete();
 

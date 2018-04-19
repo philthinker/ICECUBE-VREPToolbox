@@ -21,3 +21,5 @@ Haopeng Hu
 - scene: UR5plusRG2_PickAndPlace.ttt
 - Lua files: UR5_IKRemote_v1.lua, RG2_CLose.lua
 - MATLAB files: UR5_PickAndPlace_v1.m
+
+**DEPRECATED**
