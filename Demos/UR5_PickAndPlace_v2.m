@@ -54,6 +54,25 @@ while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_
     i = i + 1;
     pause(0.1);
 end
+%% Move to target configuration
+[res, temppos] = vrep.simxGetObjectPosition(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+[res, tempqua] = vrep.simxGetObjectQuaternion(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+temppos(3) = temppos(3) + 0.2;
+sim_rmlMoveToPosition(vrep,clientID, temppos, tempqua);
+pause(1);
+while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+    i = i + 1;
+    pause(0.1);
+end
+temppos(2) = temppos(2) + 0.1;
+sim_rmlMoveToPosition(vrep,clientID, temppos, tempqua);
+pause(1);
+while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+    i = i + 1;
+    pause(0.1);
+end
 %% Move by ik group
 % [res, temppos] = vrep.simxGetObjectPosition(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
 % vrchk(vrep,res);

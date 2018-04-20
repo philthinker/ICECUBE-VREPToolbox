@@ -122,12 +122,17 @@ function sysCall_threadmain(  )
             for i = 1,6,1 do
                 rmlJoints[i] = sim.getFloatSignal('ICECUBE_'..i)
             end
-            local res = rem_rmlMoveToJointPositions(rmlJoints)
-            if res == 1 then
-                sim.setIntegerSignal('ICECUBE_0', 0)
-            end
+            rem_rmlMoveToJointPositions(rmlJoints)
+            sim.wait(0.2)
+            sim.setIntegerSignal('ICECUBE_0', 0)
         elseif icecube_sign == 2 then
             -- Cartesian Motion
+            for i = 1,7,1 do
+                rmlPosQua[i] = sim.getFloatSignal('ICECUBE_'..i)
+            end
+            rem_rmlMoveToPosition(rmlPosQua)
+            sim.wait(0.2)
+            sim.setIntegerSignal('ICECUBE_0', 0)
         elseif icecube_sign == 3 then
             -- Stop Simulation
             break
