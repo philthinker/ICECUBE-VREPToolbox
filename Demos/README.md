@@ -17,9 +17,12 @@ Haopeng Hu
 - scene: UR5plusRG2_PickAndPlace.ttt
 - Lua files: UR5_PickAndPlace_Demo.lua, RG2_CLose_Embedded.lua
 
-### MATLAB + Embedded scripts (2018.04.19)
+### MATLAB + Embedded scripts (DEPRECATED) (2018.04.19)
 - scene: UR5plusRG2_PickAndPlace.ttt
 - Lua files: UR5_IKRemote_v1.lua, RG2_CLose.lua
 - MATLAB files: UR5_PickAndPlace_v1.m
 
-**DEPRECATED**
+## MATLAB + Embedded scripts (2018.04.20)
+- scene: UR5plusRG2_PickAndPlace.ttt
+- Lua files: UR5_IKRemote_v2.lua, RG2_CLose_Embedded.lua
+- MATLAB files: UR5_PickAndPlace_v2.m

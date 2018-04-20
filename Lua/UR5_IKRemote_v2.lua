@@ -94,15 +94,11 @@ function sysCall_threadmain(  )
 
     sim.setIntegerSignal('IKEnable', 0)         -- The sign for ik mechanism
     
-    -- The ICECUBE Communication Protocol
+    -- The ICECUBE Communication Protocol v1.0
     sim.setIntegerSignal('ICECUBE_0', 0)
-    sim.setFloatSignal('ICECUBE_1', 0.00)
-    sim.setFloatSignal('ICECUBE_2', 0.00)
-    sim.setFloatSignal('ICECUBE_3', 0.00)
-    sim.setFloatSignal('ICECUBE_4', 0.00)
-    sim.setFloatSignal('ICECUBE_5', 0.00)
-    sim.setFloatSignal('ICECUBE_6', 0.00)
-    sim.setFloatSignal('ICECUBE_7', 0.00)
+    for i = 1,7,1 do
+        sim.setFloatSignal('ICECUBE_'..i, 0.000000)
+    end
     local rmlJoints = {0, 0, 0, 0, 0, 0}
     local rmlPosQua = {0, 0, 0, 0, 0, 0, 0} 
 
@@ -112,7 +108,7 @@ function sysCall_threadmain(  )
     
     
     while true do
-        -- The ICECUBE Communication Protocol 
+        -- The ICECUBE Communication Protocol v1.0
         local icecube_sign = sim.getIntegerSignal('ICECUBE_0')
         if icecube_sign == 0 then
             -- Nothing to do, pass

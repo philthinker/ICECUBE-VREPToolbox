@@ -39,13 +39,6 @@ else
     disp('UR5 is ready.');
 end
 
-%% Open the RG2
-% res = sim_rg2Open(vrep, clientID, vrep.simx_opmode_blocking);
-% vrchk(vrep,res);
-% pause(5)
-% res = sim_rg2Close(vrep, clientID, vrep.simx_opmode_blocking);
-% vrchk(vrep,res);
-% pause(5)
 %% Move to target joint positions
 tempjpos = deg2rad([-70.1, 18.85, 93.18, 68.02, 109.9, 90]);
 sim_rmlMoveToJointPositions(vrep,clientID,tempjpos);
@@ -54,55 +47,65 @@ while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_
     i = i + 1;
     pause(0.1);
 end
-%% Move to target configuration
-[res, temppos] = vrep.simxGetObjectPosition(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
-vrchk(vrep,res);
-[res, tempqua] = vrep.simxGetObjectQuaternion(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
-vrchk(vrep,res);
-temppos(3) = temppos(3) + 0.2;
-sim_rmlMoveToPosition(vrep,clientID, temppos, tempqua);
-pause(1);
-while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
-    i = i + 1;
-    pause(0.1);
-end
-temppos(2) = temppos(2) + 0.1;
-sim_rmlMoveToPosition(vrep,clientID, temppos, tempqua);
-pause(1);
-while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
-    i = i + 1;
-    pause(0.1);
-end
+
 %% Move by ik group
-% [res, temppos] = vrep.simxGetObjectPosition(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
-% vrchk(vrep,res);
-% [res, tempqua] = vrep.simxGetObjectQuaternion(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
-% vrchk(vrep,res);
-% 
-% [res, targetQua] = vrep.simxGetObjectQuaternion(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
-%     vrchk(vrep, res);
-% for i = 1:2
-%     [res, toyPos] = vrep.simxGetObjectPosition(clientID,toys(i),-1,vrep.simx_opmode_blocking);
-%     vrchk(vrep,res);
-%     targetPos = toyPos; targetPos(3) = targetPos(3)+0.3;
-%     targetPos
-%     res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
-%     targetPos = toyPos;
-%     res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
-%     res = simx_rg2Close(vrep,clientID,vrep.simx_opmode_blocking); vrchk(vrep, res);
-%     pause(5);
-%     targetPos(3) = targetPos(3)+0.1+0.03*(i-1);
-%     res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
-%     pause(1)
-%     targetPos(2) = targetPos(2)+0.3;
-%     res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
-%     targetPos(3) = targetPos(3) -0.1 -0.06*i;
-%     res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
-%     res = simx_rg2Open(vrep,clientID,vrep.simx_opmode_blocking); vrchk(vrep, res);
-%     pause(5)
-%     targetPos(3) = targetPos(3) + 0.1 + 0.06*i;
-%     res = simx_rmlMoveToPosition(vrep,clientID,vrep.simx_opmode_blocking,targetPos,targetQua); vrchk(vrep, res);
-% end
+res = sim_rg2Open(vrep, clientID, vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+pause(2.5);
+[res, targetQua] = vrep.simxGetObjectQuaternion(clientID, handles.ur5ikTip, -1, vrep.simx_opmode_blocking);
+vrchk(vrep, res);
+for i = 1:2
+    [res, toyPos] = vrep.simxGetObjectPosition(clientID,toys(i),-1,vrep.simx_opmode_blocking);
+    vrchk(vrep,res);
+    targetPos = toyPos; targetPos(3) = targetPos(3)+0.2;
+    sim_rmlMoveToPosition(vrep,clientID,targetPos,targetQua);
+    pause(1); j = 0;
+    while j < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+        j = j + 1;
+        pause(0.1);
+    end
+    targetPos = toyPos;
+    sim_rmlMoveToPosition(vrep,clientID,targetPos,targetQua);
+    pause(1); j = 0;
+    while j < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+        j = j + 1;
+        pause(0.1);
+    end
+    res = sim_rg2Close(vrep, clientID, vrep.simx_opmode_blocking);
+    vrchk(vrep,res);
+    pause(2.5)
+    targetPos(3) = targetPos(3)+0.1+0.03*(i-1);
+    sim_rmlMoveToPosition(vrep,clientID,targetPos,targetQua);
+    pause(1); j = 0;
+    while j < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+        j = j + 1;
+        pause(0.1);
+    end
+    targetPos(2) = targetPos(2)+0.2;
+    sim_rmlMoveToPosition(vrep,clientID,targetPos,targetQua);
+    pause(1); j = 0;
+    while j < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+        j = j + 1;
+        pause(0.1);
+    end
+    targetPos = toyPos; targetPos(2) = targetPos(2)+0.2; targetPos(3) = targetPos(3) + (i-1)*0.03;
+    sim_rmlMoveToPosition(vrep,clientID,targetPos,targetQua);
+    pause(1); j = 0;
+    while j < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+        j = j + 1;
+        pause(0.1);
+    end
+    res = sim_rg2Open(vrep, clientID, vrep.simx_opmode_blocking);
+    vrchk(vrep,res);
+    pause(2.5)
+    targetPos(3) = targetPos(3) + 0.03*i;
+    sim_rmlMoveToPosition(vrep,clientID,targetPos,targetQua);
+    pause(1); j = 0;
+    while j < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
+        j = j + 1;
+        pause(0.1);
+    end
+end
     
 %% Move to initial joint positions
 tempjpos = zeros(1,6);
@@ -113,7 +116,7 @@ while i < TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_
     pause(0.1);
 end
 %% Clean the vrep threads and shut down the program
-vrep.simxSetIntegerSignal(clientID, 'ICECUBE_0', 3, vrep.simx_opmode_blocking);
+ICECUBE_stop(vrep, clientID)
 vrep.simxFinish(clientID);
 vrep.delete();
 
