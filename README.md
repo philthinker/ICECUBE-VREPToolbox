@@ -30,4 +30,14 @@ Just clone the master branch anywhere you want.
 
  See 'Demos' for more demos.
 
+# Attention
+
+For most applications, you do not have to include the whole package into your project. What you may need are:
+
+ - ICECUBE_VREPToolbox
+
+ - ICECUBE_VREPToolbox\vrepTools
+
+ - ICECUBE_VREPToolbox\robotTools\
+
  Enjoy it for your cool summer!
