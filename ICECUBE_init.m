@@ -8,3 +8,6 @@
 addpath('vrepTools');
 addpath('robotTools\UR5VREPTools');
 addpath('robotTools\RG2VREPTools');
+addpath('robotTools\UR5Tools');
+addpath('robotTools\RigidBodyTools');
+addpath('mlTools\rlTools');
