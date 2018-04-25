@@ -20,7 +20,8 @@ However, it is still under development.
 
 # Install
 
-Just clone the master branch anywhere you want.
+1. Just clone the master branch anywhere you want.
+2. Cut the file 'ICECUBE_init.m' out to your project's repository and modify it. 
 
 # Demo
 

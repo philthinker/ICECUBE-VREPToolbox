@@ -5,7 +5,7 @@ function [  ] = sim_rmlMoveToPosition( vrep, clientID, targetPos, targetQua )
 % targetPos: 1 x 3 vector, the target xyz position
 % targetQua: 1 x 4 vector, the target quaternion
 
-% 'Lua\UR5IKRemote_v2.lua' is required
+% 'Lua\UR5_IKRemote_v2.lua' is required
 
 vrep.simxPauseCommunication(clientID, 1);
 vrep.simxSetIntegerSignal(clientID, 'ICECUBE_0', 2, vrep.simx_opmode_oneshot);

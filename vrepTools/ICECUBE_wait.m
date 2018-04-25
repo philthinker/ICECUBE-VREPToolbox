@@ -6,12 +6,14 @@ function [ ticks ] = ICECUBE_wait( vrep, clientID, tick_step, TIMEOUT )
 %TIMEOUT: The timeout
 %ticks: The number of ticks counted
 
-i = 0;
-while i<=TIMEOUT && vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking) ~= 0
-    i = i+1;
+j = 0; signal = 99;
+while j<=TIMEOUT && signal ~= 0
+    j = j+1;
+    [res, signal] = vrep.simxGetIntegerSignal(clientID, 'ICECUBE_0', vrep.simx_opmode_blocking);
+    vrchk(vrep,res);
     pause(tick_step);
 end
-ticks = i;
+ticks = j;
 
 end
 
