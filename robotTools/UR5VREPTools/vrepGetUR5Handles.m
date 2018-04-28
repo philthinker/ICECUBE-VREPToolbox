@@ -28,3 +28,5 @@ handles.ur5Ref = ur5Ref;
 [res, ur5ikTip] = vrep.simxGetObjectHandle(clientID,'UR5_ikTip',vrep.simx_opmode_blocking);
 vrchk(vrep,res);
 handles.ur5ikTip = ur5ikTip;
+
+clear jointNames ur5Joints ur5Ref ur5ikTip res

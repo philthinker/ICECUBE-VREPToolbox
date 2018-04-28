@@ -12,3 +12,5 @@
     'RG2',vrep.simx_opmode_blocking);
 vrchk(vrep,res);
 handles.rg2Ref = rg2Ref;
+
+clear rg2Ref res

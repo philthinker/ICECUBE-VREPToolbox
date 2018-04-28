@@ -7,6 +7,7 @@
 
 % vrep: the vrep object
 % clientID: the id of the MATLAB applicaiton
+% handels: the set of handles in V-REP scene
 
 disp('Connecting to V-REP service...');
 vrep = remApi('remoteApi');     % Use remoteApiProto.m
@@ -21,6 +22,7 @@ clientID = vrep.simxStart('127.0.0.1',19997,true,true,6000,5);  % Connect to V-R
 
 if clientID > -1    % Connected!
     disp('Connected!');
+    handles = struct('ID',clientID);
 else
     disp('Failed connecting to remote API server');
     vrep.delete();
