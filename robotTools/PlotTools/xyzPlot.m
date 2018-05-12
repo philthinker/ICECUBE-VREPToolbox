@@ -1,6 +1,6 @@
 function [  ] = xyzPlot( xyzData, buffer, figTitle )
 %xyzPlot Plot the x,y,z data in a 3D plot figure.
-% xyzData: the data to be ploted.
+% xyzData: [x,y,z,...], the data to be ploted.
 % buffer: the color (default 'k')
 % figTitle: the title (default '')
 
@@ -16,6 +16,7 @@ ax = gca;
 ax.Projection = 'orthographic';
 plot3(xyzData(:,1),xyzData(:,2),xyzData(:,3),buffer);
 grid on
+axis equal
 xlabel('x');
 ylabel('y');
 zlabel('z');
