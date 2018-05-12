@@ -2,17 +2,15 @@
 
 Haopeng Hu
 
-2018.04.12 - 2018.05.12
+2018.05.12
 
 A toolbox designed for V-REP remote API (MATLAB) applications.
 
-v1.0
+v2.0 beta
 
 # Introduction
 
 The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applications development. You DO NOT have to learn Lua language to make V-REP simulations tick! Some V-REP scenes are built exclusively for MATLAB remote operation that can be found in the repository.
-
-However, it is still under development.
 
 # Attributes
 
@@ -22,7 +20,7 @@ However, it is still under development.
 
 # Install
 
-Just clone the master branch anywhere you want.
+Just clone the master branch anywhere you want. Move 'ICECUBE_init.m' out of ICECUBE-VREPToolbox. 
 
 # Demo
 
@@ -42,4 +40,4 @@ For most applications, you do not have to include the whole package into your pr
 
  - ICECUBE_VREPToolbox\robotTools\
 
- Enjoy it for your cool summer!
+ Sprite is our lucky beverage!
