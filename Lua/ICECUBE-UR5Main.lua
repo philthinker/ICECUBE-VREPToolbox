@@ -1,6 +1,6 @@
 -- Threaded Child Script
-
--- Attach these scripts to UR5 in V-REP scene "UR5plusRG2_PickAndPlace.ttt"
+-- ICECUBE Communication Protocal v2.0
+-- Attach these scripts to UR5 in V-REP scene.
 
 enableIk=function(enable)
     if enable then

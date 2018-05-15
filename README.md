@@ -6,7 +6,7 @@ Haopeng Hu
 
 A toolbox designed for V-REP remote API (MATLAB) applications.
 
-v2.0 beta
+v2.0 beta (**It CANNOT WORK NOW**)
 
 # Introduction
 
