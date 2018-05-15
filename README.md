@@ -6,7 +6,7 @@ Haopeng Hu
 
 A toolbox designed for V-REP remote API (MATLAB) applications.
 
-v2.0 beta (**It CANNOT WORK NOW**)
+v2.0 beta (**It CANNOT WORK NOW** Turn to branch *ICECUBEv10-CoolSummer* for a stable version)
 
 # Introduction
 
@@ -18,15 +18,17 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
  - Peter Corke's Robotics Toolbox is required for some functions (but not necessary).
 
+ - Note that the ICECUBEv2.0 and ICECUBEv1.0 are NOT mutually compatible.
+
 # Install
 
-Just clone the master branch anywhere you want. Move 'ICECUBE_init.m' out of ICECUBE-VREPToolbox. 
+Just clone the master branch anywhere you want. Move 'ICECUBE_init.m' out of ICECUBE-VREPToolbox and trim the file. 
 
 # Demo
 
  1. Open the "UR5plusRG2" scene.
 
- 2. Run "HelloICECUBE.m".
+ 2. Run "Demos\HelloICECUBE.m".
 
  See 'Demos' for more demos.
 
