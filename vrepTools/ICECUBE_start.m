@@ -6,14 +6,14 @@ function [ res ] = ICECUBE_start( vrep, clientID, step, TIMEOUT )
 %TIMEOUT: The timeout
 %res: The result
 
-% ICECUBE Communication Protocol v1.0
+% ICECUBE Communication Protocol v2.0
 res = vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking);
 disp('Simulation Started!');
 vrchk(vrep,res);
-i=0; ClientRunning = 0;
-while i < TIMEOUT && ClientRunning == 0
+i=0; ur5ready = 0;
+while i < TIMEOUT && ur5ready == 0
     i = i + 1;
-    [res, ClientRunning] = vrep.simxGetIntegerSignal(clientID,'ClientRunning',vrep.simx_opmode_blocking);
+    [res, ur5ready] = vrep.simxGetIntegerSignal(clientID,'UR5READY',vrep.simx_opmode_blocking);
     vrchk(vrep,res);
     pause(step);
 end

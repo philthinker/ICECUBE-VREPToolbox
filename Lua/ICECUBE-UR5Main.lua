@@ -18,7 +18,7 @@ enableIk=function(enable)
     end
 end
 
-rem_rmlMoveToJointPositions = function(inFloats)   -- rad
+ICECUBErmlMoveToJointPositions = function(inFloats)   -- rad
     local targetPos = {0,0,0,0,0,0}
     if #inFloats>=6 then
         for i = 1,6,1 do
@@ -39,29 +39,8 @@ rem_rmlMoveToJointPositions = function(inFloats)   -- rad
     return res 
 end
 
-rem_rmlMoveToJointPositions_pro = function(initialVel, inFloats, finalVel)
-    --local initialVel = {0,0,0,0,0,0}
-    local targetPos = {0,0,0,0,0,0}
-    --local finalVel = {0,0,0,0,0,0}
-    if #inFloats>=6 then
-        for i = 1,6,1 do
-            targetPos[i] = inFloats[i]
-        end
-    else
-        for i = 1,#inFloats,1 do
-            targetPos[i] = inFloats[i]
-        end
-    end
-    if sim.getIntegerSignal('IKEnable') ~= 0 then
-        enableIk(false)
-        sim.setIntegerSignal('IKEnable', 0)
-    end
-    if sim.getSimulationState() ~= sim.simulation_advancing_abouttostop then
-        sim.rmlMoveToJointPositions(jointHandles,-1,initialVel,currentAccel,maxVel,maxAccel,maxJerk,targetPos,finalVel)
-    end
-end
 
-rem_rmlMoveToPosition = function(inFloats)
+ICECUBErmlMoveToPosition = function(inFloats)
     local targetPos = sim.getObjectPosition(ikTip, -1)
     local targetQua = sim.getObjectQuaternion(ikTip, -1)
     if #inFloats>=7 then
@@ -86,7 +65,7 @@ end
 
 function sysCall_threadmain(  )
     sim.setThreadSwitchTiming(100)
-    sim.setIntegerSignal('ClientRunning', 0)
+    sim.setIntegerSignal('UR5READY', 0)
     -- Initialize some values:
     jointHandles={-1,-1,-1,-1,-1,-1}
     for i=1,6,1 do
@@ -116,7 +95,7 @@ function sysCall_threadmain(  )
 
     sim.setIntegerSignal('IKEnable', 0)         -- The sign for ik mechanism
     
-    -- The ICECUBE Communication Protocol v1.1
+    -- The ICECUBE Communication Protocol v2.0
     sim.setIntegerSignal('ICECUBE_0', 0)
     for i = 1,7,1 do
         sim.setFloatSignal('ICECUBE_'..i, 0.000000)
@@ -124,71 +103,43 @@ function sysCall_threadmain(  )
     local rmlJoints = {0, 0, 0, 0, 0, 0}
     local rmlPosQua = {0, 0, 0, 0, 0, 0, 0} 
 
-    sim.setIntegerSignal('ClientRunning',1)     -- the sign for client applications
+    sim.setIntegerSignal('UR5READY',1)     -- the sign for client applications
     sim.addStatusbarMessage('The UR5 is ready to move!')
 
-    
-    
     while true do
-        -- The ICECUBE Communication Protocol v1.1
-        local icecube_sign = sim.getIntegerSignal('ICECUBE_0')
-        if icecube_sign == 0 then
-            -- Nothing to do, pass
-            sim.wait(0.2)
-        elseif icecube_sign == 1 then
+        -- The ICECUBE Communication Protocol v2.0
+        local icecubeCMD = sim.getIntegerSignal('ICECUBE_0')
+        local coarseCMD = math.floor( icecubeCMD/10 )
+        local fineCMD = icecubeCMD % 10
+        if coarseCMD == 0 then
+            -- Default
+            if fineCMD == 1 then
+                -- Stop the simulation
+                break
+            else
+                sim.wait(0.2)
+            end
+        elseif coarseCMD == 1 then
             -- Joint Motion Plan
-            --sim.addStatusbarMessage('Joint Motion Planning!')
             for i = 1,6,1 do
                 rmlJoints[i] = sim.getFloatSignal('ICECUBE_'..i)
             end
-            rem_rmlMoveToJointPositions(rmlJoints)
-            sim.wait(0.2)
-            sim.setIntegerSignal('ICECUBE_0', 0)
-        elseif icecube_sign == 2 then
-            -- Cartesian Motion
-            --sim.addStatusbarMessage('Cartesian Motion Planning!')
+            if fineCMD == 1 then 
+                -- Simple point-to-point joint motion plan
+                ICECUBErmlMoveToJointPositions(rmlJoints)
+                sim.setIntegerSignal('ICECUBE_0', 0)
+            end
+        elseif coarseCMD == 2 then
+            -- Cartesian Motion Plan
             for i = 1,7,1 do
                 rmlPosQua[i] = sim.getFloatSignal('ICECUBE_'..i)
             end
-            rem_rmlMoveToPosition(rmlPosQua)
-            sim.wait(0.2)
-            sim.setIntegerSignal('ICECUBE_0', 0)
-        elseif icecube_sign == 3 then
-            -- Stop Simulation
-            break
-        elseif icecube_sign == 4 then
-            -- A series of joint motion (at least 3 points)
-            -- ICECUBE Communication Protocol v1.1
-            sim.setIntegerSignal('ICECUBE_0', 0)
-        elseif icecube_sign == 5 then
-            -- Prefessional Joint Motion Plan
-            -- The starting point
-            --sim.addStatusbarMessage('Joint Motion Plan: Starting Point!')
-            for i = 1,6,1 do
-                rmlJoints[i] = sim.getFloatSignal('ICECUBE_'..i)
+            if fineCMD == 1 then
+                -- Simple point-to-point cartesian motion plan
+                ICECUBErmlMoveToPosition(rmlPosQua)
+                sim.setIntegerSignal('ICECUBE_0',0)
             end
-            rem_rmlMoveToJointPositions_pro(currentVel,rmlJoints,currentVel)
-            sim.setIntegerSignal('ICECUBE_0', 0)
-        elseif icecube_sign == 6 then
-            -- Professional Joint Motion Plan
-            -- The route point
-            --sim.addStatusbarMessage('Joint Motion Plan: Route Point!')
-            for i = 1,6,1 do
-                rmlJoints[i] = sim.getFloatSignal('ICECUBE_'..i)
-            end
-            rem_rmlMoveToJointPositions_pro(currentVel,rmlJoints,currentVel)
-            sim.setIntegerSignal('ICECUBE_0', 0)
-        elseif icecube_sign == 7 then
-            -- Professional Joint Motion Plan
-            -- The ending point
-            --sim.addStatusbarMessage('Joint Motion Plan: Ending Point!')
-            for i = 1,6,1 do
-                rmlJoints[i] = sim.getFloatSignal('ICECUBE_'..i)
-            end
-            rem_rmlMoveToJointPositions_pro(currentVel,rmlJoints,currentVel)
-            sim.setIntegerSignal('ICECUBE_0', 0)
         end
     end
-
     sim.stopSimulation()
 end
