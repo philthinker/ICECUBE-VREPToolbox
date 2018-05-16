@@ -10,20 +10,30 @@ rg2Close = function()
 end
 
 rg2Grasp = function()
-    index=0
+    local index = 0
+    local res = 0
+    local graspSign = 0
     while true do
         -- Search for non-static and respondable objects
         shape = sim.getObjects(index,sim.object_shape_type)
         if shape == -1 then
             break
         end
-        if (sim.getObjectInt32Parameter(shape,sim.shapeintparam_static)==0) and (sim.getObjectInt32Parameter(shape,sim.shapeintparam_respondable)~=0) and (sim.checkProximitySensor(objectSensor,shape)==1) then
-            -- Ok, we find a non-static, respondable shape that was detected by the proximity sensor.
-            attachedShape = shape
-            -- Connection
-            sim.setObjectParent(attachedShape,connector,false)
-            sim.setIntegerSignal('RG2GRASP', 1)
-            break
+        res, graspSign = sim.getObjectInt32Parameter(shape,sim.shapeintparam_static)
+        if graspSign == 0 then
+            -- A dynamic shape is found
+            res, graspSign = sim.getObjectInt32Parameter(shape,sim.shapeintparam_respondable)
+            if graspSign == 1 then
+                -- A respondable shape is found
+                if sim.checkProximitySensor(objectSensor,shape) == 1 then
+                    -- Yes, it is in the gripper's task space
+                    attachedShape = shape
+                    -- Connection
+                    sim.setObjectParent(attachedShape,connector,true)
+                    sim.setIntegerSignal('RG2GRASP', 1)
+                    break
+                end
+            end
         end
         index = index + 1
     end
