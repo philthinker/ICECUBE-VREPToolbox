@@ -4,9 +4,9 @@ Haopeng Hu
 
 2018.05.12
 
-A toolbox designed for V-REP remote API (MATLAB) applications.
+A toolbox designed for V-REP remote API (MATLAB & Python) applications.
 
-v2.0
+v2.1 beta - 2018.05.17 updated
 
 ## Introduction
 
@@ -14,15 +14,19 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
 ## Attributes
 
-- The toolbox has been tested on MATLAB2016b together with V-REP PRO EDU 3.5.0 (Windows 10 x64).
+- The toolbox has been tested on **MATLAB2016b** together with **V-REP PRO EDU 3.5.0** (Windows 10 x64).
 
 - Peter Corke's Robotics Toolbox is required for some functions (but not necessary).
 
-- Note that the ICECUBEv2.0 and ICECUBEv1.0 are NOT mutually compatible.
+- Note that the ICECUBEv2.1 and ICECUBEv1.0 are NOT mutually compatible.
+
+- The functions of Python APIs are limited now. They are tested on **Python 3.6**.
 
 ## Install
 
-Just clone the master branch anywhere you want. Move 'ICECUBE_init.m' out of ICECUBE-VREPToolbox and trim the file. 
+- For MATLAB users, clone the master branch anywhere you want. Move 'ICECUBE_init.m' out of ICECUBE-VREPToolbox and trim the file based on your requirement.
+
+- For Python users, what you need is just the folder "Python".
 
 ## Demo
 
@@ -42,4 +46,4 @@ For most applications, you do not have to include the whole package into your pr
 
 - ICECUBE_VREPToolbox\robotTools\
 
- Sprite is our lucky beverage!
+ *No sprite, no summer!*
