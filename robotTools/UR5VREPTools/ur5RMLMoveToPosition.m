@@ -11,7 +11,7 @@ function [  ] = ur5RMLMoveToPosition( vrep, clientID, targetPosition, targetQuat
 % 2018.05.15
 
 
-% targetQuaternion = toVREPQuat(targetQuaternion);
+targetQuaternion = toVREPQuat(targetQuaternion);
 vrep.simxPauseCommunication(clientID, 1);
 vrep.simxSetIntegerSignal(clientID, 'ICECUBE_0', 21, vrep.simx_opmode_oneshot);
 for i = 1:3

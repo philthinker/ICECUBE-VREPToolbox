@@ -1,9 +1,8 @@
 function [  ] = ur5RMLMoveToJointPositions( vrep, clientID, targetPositions )
-%ur5RMLMoveToJointPositions Reflexxes Motion Library - Joint space
+%ur5RMLMoveToJointPositions Reflexes Motion Library - Joint space
 % vrep: the vrep object
 % clientID: the MATLAB client ID
-% targetPos: 1 x 6 vector, the target joint positions
-% operationMode: 0 for oneshot mode while 1 for blocking mode (not neces.)
+% targetPositions: 1 x 6 vector, the target joint positions
 
 % ICECUBE Communication Protocol v2.0
 % Haopeng Hu
