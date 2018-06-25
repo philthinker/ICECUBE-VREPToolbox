@@ -1,5 +1,5 @@
 function [ tipPosition ] = ur5GetIKTipPosition( vrep, clientID, handles )
-%ur5GetIKTipPosition Get UR5's joint positions from the V-REP scene
+%ur5GetIKTipPosition Get UR5's ikTip's position from the V-REP scene
 % vrep: the vrep object
 % clientID: the MATLAB client ID
 % handles: the handles of V-REP scence

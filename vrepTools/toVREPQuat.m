@@ -1,9 +1,7 @@
 function [ VREPQuat ] = toVREPQuat( unitQuat )
 %toVREPQuat Transform a quaternion of <s,x,y,z> to VREP form (x,y,z,s)
-% sxyzQuat: the <w,x,y,z> quaternion
+% unitQuat: the <w,x,y,z> quaternion
 % VREPQuat: the quaternion <x,y,z,s>
-
-% Peter Corke's Robotics Toolbox is required.
 
 VREPQuat = zeros(1,4);
 VREPQuat(4) = unitQuat(1);

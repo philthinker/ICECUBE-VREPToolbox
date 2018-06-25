@@ -1,11 +1,12 @@
 % vrepGetUR5Handles
 % A section of scripts to get UR5's handls from the vrep scene.
 % Haopeng Hu
-% 2018.04.16
+% 2018.06.25
 
 % handles.ur5Joints: handles of joints of UR5
 % handles.ur5Ref: handle of UR5
 % handles.ur5ikTip: handle of UR5' ikTip
+% handles.ur5connector: handle of UR5's connector ( ForceTorque sensor)
 
 % Make sure you have run 'vrepTools\vrepRemApi_init.m' in advance.
 
@@ -28,5 +29,9 @@ handles.ur5Ref = ur5Ref;
 [res, ur5ikTip] = vrep.simxGetObjectHandle(clientID,'UR5_ikTip',vrep.simx_opmode_blocking);
 vrchk(vrep,res);
 handles.ur5ikTip = ur5ikTip;
+%% Get the UR5's connector's handle
+[res,ur5connector] = vrep.simxGetObjectHandle(clientID,'UR5_connection',vrep.simx_opmode_blocking);
+vrchk(vrep,res);
+handles.ur5connector = ur5connector;
 
-clear jointNames ur5Joints ur5Ref ur5ikTip res
+clear jointNames ur5Joints ur5Ref ur5ikTip ur5connector res

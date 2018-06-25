@@ -20,11 +20,13 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
 - The functions of Python APIs are limited now. They are tested on **Python 3.6**.
 
+- Some of the functions in ICECUBE v2.1 are not supported.
+
 ## Install
 
 - Copy the codes in the folder 'Lua' to the V-REP scene.
 
-- For MATLAB users, clone the master branch anywhere you want. Move 'ICECUBE_init.m' out of ICECUBE-VREPToolbox and trim the file based on your requirement.
+- For MATLAB users, clone the master branch anywhere you want. Move 'loadICECUBE.m' out of ICECUBE-VREPToolbox and trim the file based on your requirement.
 
 - For Python users, what you need is just the folder "Python".
 
@@ -35,17 +37,5 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
  2. Run "Demos\HelloICECUBE.m".
 
  Refer to 'Demos\' for more demos.
-
-## Attention
-
-For most applications, you do not have to include the whole package into your project. What you may need are:
-
-- ICECUBE_VREPToolbox
-
-- ICECUBE_VREPToolbox\vrepTools
-
-- ICECUBE_VREPToolbox\robotTools\
-
-Some of the functions in ICECUBE v2.1 are not supported!
 
  *No sprite, no summer!*
