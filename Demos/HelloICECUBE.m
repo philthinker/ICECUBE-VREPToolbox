@@ -28,7 +28,7 @@ for j = 5:5
     ur5RMLMoveToJointPositions(vrep,clientID,initialConfig);
     for i = 1:Nj
         % Drive the UR5
-        ur5RMLMoveToPosition(vrep,clientID,TrajSelected(i,1:3),TrajSelected(i,4:7))
+        ur5RMLMoveToPosition(vrep,clientID,TrajSelected(i,1:3),[TrajSelected(i,7), TrajSelected(i,4:6)])
         if TrajSelected(i,end) ~= gripperFlag
             % Close or open the gripper
             gripperFlag = TrajSelected(i,end);
