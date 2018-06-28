@@ -1,10 +1,8 @@
-function [ forces, torques, state ] = ur5ReadForceSensor( vrep, clientID, handles, N, sampleInterval )
-%ur5ReadForceSensor Read the data from UR5's connector
+function [ FTdata ] = ur5ReadFT( vrep, clientID, handles, N, sampleInterval )
+%ur5ReadFT Read the data from UR5's connector as a 6-d vector
 % N: the number of datasets (default:1)
 % sampleInterval: the sample interval (dafulat:0.05)
-% state: 0 for active, 1 for broken
-% forces: N x 3, values representing the force vector
-% torques: N x 3, values representing the torque vector
+% FTdata: N x 6, the sensor signal from UR5's connector
 
 if nargin < 5
     sampleInterval = 0.05;
@@ -13,23 +11,20 @@ if nargin < 5
     end
 end
 
-forces = zeros(N,3);
-torques = zeros(N,3);
+FTdata = zeros(N,6);
 
 % Start the stream
 [~, state] = vrep.simxReadForceSensor(clientID,handles.ur5connector,vrep.simx_opmode_streaming);
 
 if state == 0
     % the data is available
-%     disp('Available!');
     i = 1; k = 1;
     while i<=N && k<= 40000
         [res,~,forceVec,torqueVec] = vrep.simxReadForceSensor(clientID,handles.ur5connector,vrep.simx_opmode_buffer);
         if res == vrep.simx_return_ok
             % the sensor is working
-%             disp('Get a dataset');
-            forces(i,:) = forceVec;
-            torques(i,:) = torqueVec;
+            FTdata(i,1:3) = forceVec;
+            FTdata(i,4:6) = torqueVec;
             i = i + 1;
         end
         k = k + 1;
@@ -38,7 +33,7 @@ if state == 0
 end
 
 % Stop the stream
-[~,state] = vrep.simxReadForceSensor(clientID,handles.ur5connector,vrep.simx_opmode_discontinue);
+[~,~] = vrep.simxReadForceSensor(clientID,handles.ur5connector,vrep.simx_opmode_discontinue);
 
 end
 
