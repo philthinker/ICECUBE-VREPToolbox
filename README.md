@@ -18,8 +18,6 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
 - Note that the ICECUBEv2.X and ICECUBEv1.0 are NOT mutually compatible.
 
-- The functions of Python APIs are limited now. They are tested on **Python 3.6**.
-
 - Some of the functions in ICECUBE v2.1 are not supported.
 
 ## Install
