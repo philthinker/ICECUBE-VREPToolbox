@@ -7,7 +7,7 @@ classdef ICECUBE
     
     % ICECUEB Communication Protocol v2.0
     
-    properties ( Access = private )
+    properties ( Access = public )
         vrep;       % The vrep object
         clientID;   % The ID of the MATLAB applicaiton
         handles;    % The set of handles in V-REP scene
@@ -51,9 +51,11 @@ classdef ICECUBE
         obj = getObjectHandle(obj,objectName)           % Get the handle of 'objectName'
         handles = getHandles(obj)                       % Get the handles of ICECUBE
         position = getObjectPosition(obj,objectName)    % Get the position of the object in the V-REP scene by name
+        % VREP model API
+        obj = getUR5Handles(obj)    % Get the handles of UR5
     end
     
-    methods ( Access = protected )
+    methods ( Access = public )
         ticks = wait(obj)           % Wait until the task is done
     end
     

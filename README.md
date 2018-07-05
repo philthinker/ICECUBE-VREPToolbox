@@ -18,7 +18,7 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
 - Some of the functions in ICECUBE v2.1 are not supported.
 
-- It supports all the APIs in ICECUBE v2.2.
+- It supports all the system APIs in ICECUBE v2.2.
 
 ## Install
 
