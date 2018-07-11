@@ -11,6 +11,7 @@ addpath('vrepTools');
 addpath('robotTools');
 addpath('robotTools\UR5VREPTools');
 addpath('robotTools\RG2VREPTools');
+addpath('Demos\');
 
 %% Initialize out of the toolbox
 % For your applications

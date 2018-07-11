@@ -20,7 +20,7 @@ for i = 4:7
 end
 icecube.vrep.simxPauseCommunication(icecube.clientID, 0);
 
-icecube.wait()
+icecube.wait();
 
 %% ICECUBE 2.2
 % % [  ] = ur5RMLMoveToPosition( vrep, clientID, targetPosition, targetQuaternion )

@@ -2,11 +2,11 @@
 
 Haopeng Hu
 
-2018.05.12
+2018.07.05
 
 A toolbox designed for V-REP remote API MATLAB applications.
 
-v2.3.0 beta - 2018.06.30 updated
+v2.3.0
 
 ## Introduction
 
@@ -34,10 +34,10 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
 ## Demo
 
- 1. Open the "PickAndPlace_v2.ttt" scene.
+There are two demos as well as two V-REP scenes available:
 
- 2. Run "Demos\HelloICECUBE.m".
+ 1. Open the "UR5PickAndPlace.ttt" scene and run "Demo\HelloICECUBE_PickAndPlace.m".
 
- Refer to 'Demos\' for more demos.
+ 2. Open the "UR5PegInHole.ttt" scene and run "Demo\HelloICECUBE_PegInHole.m".
 
  *No sprite, no summer!*

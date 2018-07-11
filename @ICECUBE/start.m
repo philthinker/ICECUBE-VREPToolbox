@@ -13,7 +13,7 @@ while i < obj.TIMEOUT && ur5ready == 0
     i = i + 1;
     [res, ur5ready] = obj.vrep.simxGetIntegerSignal(obj.clientID,'UR5READY',obj.vrep.simx_opmode_blocking);
     obj.vrchk(res);
-    pause(step);
+    pause(obj.step);
 end
 if i>= obj.TIMEOUT
     disp('An error occurred in your V-REP server');
