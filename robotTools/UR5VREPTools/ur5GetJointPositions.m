@@ -9,14 +9,5 @@ for i = 1:6
     icecube.vrchk(res);
 end
 
-%% ICECUBE 2.2
-% % [ jointPositions ] = ur5GetJointPositions( vrep, clientID, handles )
-% jointPositions = zeros(1,6);
-% for i = 1:6
-%     [res, jointPositions(i)] = vrep.simxGetJointPosition(clientID, handles.ur5Joints(i), vrep.simx_opmode_blocking);
-%     vrchk(vrep,res);
-% end
-
-
 end
 

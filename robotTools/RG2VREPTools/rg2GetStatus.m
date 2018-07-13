@@ -11,11 +11,5 @@ function [ closeSign, gripperSign ] = rg2GetStatus( icecube )
 [~, closeSign] = icecube.vrep.simxGetIntegerSignal(icecube.clientID,'RG2CLOSED',icecube.vrep.simx_opmode_blocking);
 [~,gripperSign] = icecube.vrep.simxGetIntegerSignal(icecube.clientID,'RG2GRASP',icecube.vrep.simx_opmode_blocking);
 
-%% ICECUBE v2.2
-% [ closeSign, gripperSign ] = rg2GetStatus( vrep,clientID )
-% [~, closeSign] = vrep.simxGetIntegerSignal(clientID,'RG2CLOSED',vrep.simx_opmode_blocking);
-% [~,gripperSign] = vrep.simxGetIntegerSignal(clientID,'RG2GRASP',vrep.simx_opmode_blocking);
-
-
 end
 

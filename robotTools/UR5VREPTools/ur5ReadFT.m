@@ -35,38 +35,6 @@ end
 % Stop the stream
 [~,~] = icecube.vrep.simxReadForceSensor(icecube.clientID,icecube.handles.ur5connector,icecube.vrep.simx_opmode_discontinue);
 
-%% ICECUBE 2.2
-% % [ FTdata ] = ur5ReadFT( vrep, clientID, handles, N, sampleInterval )
-% if nargin < 5
-%     sampleInterval = 0.05;
-%     if nargin < 4
-%         N = 1;
-%     end
-% end
-% 
-% FTdata = zeros(N,6);
-% 
-% % Start the stream
-% [~, state] = vrep.simxReadForceSensor(clientID,handles.ur5connector,vrep.simx_opmode_streaming);
-% 
-% if state == 0
-%     % the data is available
-%     i = 1; k = 1;
-%     while i<=N && k<= 40000
-%         [res,~,forceVec,torqueVec] = vrep.simxReadForceSensor(clientID,handles.ur5connector,vrep.simx_opmode_buffer);
-%         if res == vrep.simx_return_ok
-%             % the sensor is working
-%             FTdata(i,1:3) = forceVec;
-%             FTdata(i,4:6) = torqueVec;
-%             i = i + 1;
-%         end
-%         k = k + 1;
-%         pause(sampleInterval);
-%     end
-% end
-% 
-% % Stop the stream
-% [~,~] = vrep.simxReadForceSensor(clientID,handles.ur5connector,vrep.simx_opmode_discontinue);
 
 end
 

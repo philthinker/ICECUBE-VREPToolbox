@@ -18,16 +18,6 @@ end
 icecube.vrchk(res);
 pause(2);
 
-%% ICECUBE v2.2
-% % [ res ] = rg2Action( vrep,clientID,gripperSign )
-% if gripperSign == 1
-%     % Close
-%     res = vrep.simxSetIntegerSignal(clientID,'RG2CMD',1,vrep.simx_opmode_blocking);
-% elseif gripperSign == 0
-%     % Open
-%     res = vrep.simxSetIntegerSignal(clientID,'RG2CMD',0,vrep.simx_opmode_blocking);
-% end
-% pause(2);
 
 end
 

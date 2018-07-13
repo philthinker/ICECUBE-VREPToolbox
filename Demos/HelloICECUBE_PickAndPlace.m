@@ -30,12 +30,12 @@ icecube.start();
 
 % Move to initial configuration
 initConfig = [0, pi/8, pi/2-pi/8, 0, -pi/2, 0];
-ur5RMLMoveToJointPositions(icecube,initConfig);
+ur5MoveToJointPosition(icecube,initConfig);
 tempQuat = ur5GetIKTipQuaternion(icecube);
 pause(1);
 
 % Move to initPosition
-ur5RMLMoveToPosition(icecube,initPosition,tempQuat);
+ur5MoveToConfiguration(icecube,initPosition,tempQuat);
 pause(1);
 icecube.toPage(1);
 pause(1);
@@ -45,7 +45,7 @@ rg2Action(icecube,true);
 pause(0.5);
 
 % Move to targetPosition
-ur5RMLMoveToPosition(icecube,targetPosition,tempQuat);
+ur5MoveToConfiguration(icecube,targetPosition,tempQuat);
 pause(1);
 
 % Open the gripper

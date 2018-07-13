@@ -28,18 +28,18 @@ icecube.start();
 
 % Move to initial configuration
 initConfig = [0, pi/8, pi/2-pi/8, 0, -pi/2, 0];
-ur5RMLMoveToJointPositions(icecube,initConfig);
+ur5MoveToJointPosition(icecube,initConfig);
 tempQuat = ur5GetIKTipQuaternion(icecube);
 pause(1);
 
 % Move to the upside of the hole
-ur5RMLMoveToPosition(icecube,targetPosition+[0,0,0.15],tempQuat);
+ur5MoveToConfiguration(icecube,targetPosition+[0,0,0.15],tempQuat);
 tempPosi = ur5GetIKTipPosition(icecube);
 pause(1);
 icecube.toPage(1);
 
 % Plug
-ur5RMLMoveToPosition(icecube,tempPosi-[0,0,0.05],tempQuat);
+ur5MoveToConfiguration(icecube,tempPosi-[0,0,0.05],tempQuat);
 pause(2);
 icecube.toPage(0);
 pause(1);
