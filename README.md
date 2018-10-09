@@ -2,11 +2,11 @@
 
 Haopeng Hu
 
-2018.07.13
+2018.10.09
 
 A toolbox designed for V-REP remote API MATLAB applications.
 
-v2.3.1
+v2.4.0
 
 ## Introduction
 
