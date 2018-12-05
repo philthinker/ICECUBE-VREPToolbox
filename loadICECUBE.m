@@ -11,6 +11,9 @@ addpath('vrepTools');
 addpath('robotTools');
 addpath('robotTools\UR5VREPTools');
 addpath('robotTools\RG2VREPTools');
+addpath('efficiencyTools');
+addpath('magicTools');
+addpath('magicTools\MovementPrimitive\');
 addpath('Demos\');
 
 %% Initialize out of the toolbox
