@@ -8,4 +8,3 @@ dot_zx = [-1*dmp.tau*dmp.alpha_z*zx(1);
           dmp.tau*dmp.alpha_x*(dmp.beta_x*(dmp.goal - zx(2))-zx(3))+dmp.tau*dmp.A*dmp.transformationFunc(zx(1))];
 
 end
-

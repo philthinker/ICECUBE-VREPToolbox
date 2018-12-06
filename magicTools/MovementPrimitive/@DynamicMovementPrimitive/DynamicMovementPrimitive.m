@@ -25,7 +25,7 @@ classdef DynamicMovementPrimitive
             obj.N = psi.number();
             obj.w = ones(obj.N,1);
             obj.goal = 0;
-            obj.A = 1;
+            obj.A = 10;
             obj.tau = 1;
         end
     end
