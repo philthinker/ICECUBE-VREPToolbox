@@ -52,7 +52,8 @@ classdef ICECUBE
         handles = getHandles(obj)                       % Get the handles of ICECUBE
         position = getObjectPosition(obj,objectName)    % Get the position of the object in the V-REP scene by name
         % VREP model API
-        obj = getUR5Handles(obj)    % Get the handles of UR5
+        obj = getUR5Handles(obj)        % Get the handles of UR5
+        obj = getER3AC60Handles(obj)    % Get the handles of ER3AC60
     end
     
     methods ( Access = public )
