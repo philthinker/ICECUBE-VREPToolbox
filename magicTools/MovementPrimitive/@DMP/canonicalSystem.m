@@ -9,7 +9,7 @@ tau = obj.tau;
 alpha = obj.alphax;
 
 T = 1/tau;
-M = floor(T/dt);
+M = floor(tau/dt);
 x = zeros(M,1);
 dx = zeros(M,1);
 x(1) = 1;

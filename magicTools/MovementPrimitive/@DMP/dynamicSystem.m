@@ -1,9 +1,10 @@
-function [ y,dy,ddy ] = dynamicSystem( obj, x )
+function [ y,dy,ddy,f ] = dynamicSystem( obj, x )
 %dynamicSystem The dynamic system of DMP
 %   x: M x 1;
 %   y: M x D;
 %   dy: M x D;
 %   ddy: M x D;
+%   f: M x 1;
 %   @DMP
 
 tau = obj.tau;
@@ -41,6 +42,8 @@ for i=1:M-1
     z(i+1,:) = z(i,:) + dt*dz(i,:);
     y(i+1,:) = y(i,:) + dt*dy(i,:);
 end
-
+dz(M,:) = T*(alpha*(beta*(g' - y(M,:))-z(M,:))+f(M,:));
+dy(M,:) = T*z(M,:);
+ddy(M,:) = T*dz(M,:);
 end
 
