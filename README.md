@@ -33,4 +33,6 @@ There are two demos as well as two V-REP scenes available:
 
  2. Open the "UR5PegInHole.ttt" scene and run "Demo\HelloICECUBE_PegInHole.m".
 
+ 3. Run "magicTools\MovementPrimitive\DMP_demo.m" the learn the use of @DMP
+
  *No sprite, no summer!*

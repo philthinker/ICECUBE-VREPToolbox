@@ -8,23 +8,23 @@
 
 %% Just run a DMP
 
-% Initialize a DMP
-N = 10;
-dmp = DMP(25,5,8,N);
-
-% Initialize the Gaussian kernels (Not recommended)
-% h = 100*ones(N,1);      % variances
-% c = linspace(0.1,1,N)'; % centers
-% dmp = dmp.initGaussian(h,c);
-
-% Set the goal and origin
-dmp = dmp.setGoalOrigin(1,0);
-% Run it
-tau = 1;   % Duration
-[y,dy,ddy,x,dx,f] = dmp.run(tau);
-% Show the plots
-dmp.plot(x,y,dy,ddy,tau);
-dmp.plotGaussian(x,f,tau);
+% % Initialize a DMP
+% N = 10;
+% dmp = DMP(25,5,8,N);
+% 
+% % Initialize the Gaussian kernels (Not recommended)
+% % h = 100*ones(N,1);      % variances
+% % c = linspace(0.1,1,N)'; % centers
+% % dmp = dmp.initGaussian(h,c);
+% 
+% % Set the goal and origin
+% dmp = dmp.setGoalOrigin(1,0);
+% % Run it
+% tau = 1;   % Duration
+% [y,dy,ddy,x,dx,f] = dmp.run(tau);
+% % Show the plots
+% dmp.plot(x,y,dy,ddy,tau);
+% dmp.plotGaussian(x,f,tau);
 
 %% Run a DMP with manual weights
 
@@ -67,3 +67,14 @@ dmp.plotGaussian(x,f,tau);
 
 % % Initialize a minimal jerk trajectory
 % load('Data\SimpleMinJerk.mat')
+dmp = DMP(25,5,5,50);  % alpha, beta, alphax, N
+% Learn a trajectory
+dmp = dmp.BatchLearnLWR(T(:,1),T(:,2),T(:,3));
+% Run it
+tau = 1;
+[y,dy,ddy,x,dx,f] = dmp.run(tau);
+% % Show the plots
+% dmp.plot(x,y,dy,ddy,tau);
+% dmp.plotGaussian(x,f,tau);
+% Comparison
+dmp.plotComparison(y,dy,ddy,T(:,1),T(:,2),T(:,3),tau);

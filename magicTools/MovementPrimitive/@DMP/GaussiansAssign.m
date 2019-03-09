@@ -15,7 +15,8 @@ for i = 2:M-L
 end
 
 cs = x(INDEX==1);
-hs = 100*obj.N./cs;
+
+hs = (0.4*obj.N./cs).^2;
 
 end
 

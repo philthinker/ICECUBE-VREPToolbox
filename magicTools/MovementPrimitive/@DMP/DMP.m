@@ -71,16 +71,17 @@ classdef DMP
             % J_i = \sum_{t=1}^{T}psi_i(t)(f(t)-w_i xi(t))^2
             % J_i = (f_target - w_i S)'Tau_i(f_target - w_i S)
             
-            % Compute x
-            x = obj.canonicalSystem();
+            % Compute x (Already done in initialization)
+            % x = obj.x;
             % Compute f_target, basis S
             % y: M x D
             f_target = (obj.tau)*(obj.tau)*ddy - obj.alpha*(obj.beta*(obj.g'-y)-(obj.tau)*dy);
-            S = x.(obj.g-obj.y0)';
+            obj.g = y(end,:); obj.y0 = y(1,:);
+            S = obj.x.*(obj.g-obj.y0)';
             % Compute Tau_i and w_i
             obj.w = zeros(obj.N,1);
             for i = 1:obj.N
-                Tau = diag(obj.GaussianKernel(x,obj.c(i),obj.h(i)));
+                Tau = diag(obj.GaussianKernel(obj.x,obj.cs(i),obj.hs(i)));
                 obj.w(i) = (S'*Tau*S)\S'*Tau*f_target;
             end
         end
@@ -152,6 +153,32 @@ classdef DMP
             subplot(212);
             plot(time,f);title('f(x)'); xlabel('Time');
             aa=axis; axis([min(time) max(time) aa(3:4)]);
+        end
+        function [] = plotComparison(obj,y,dy,ddy,t,dt,ddt,tau)
+            % Show the divergence between the target trajectory and the
+            % learned DMP
+            % y: M x D, the learned trajectory
+            % t: M x D, the target trajectory
+            % tau: the duration
+            time = linspace(0,tau,size(t,1));
+            for i = 1:obj.D
+                figure(i);clf;
+                
+                subplot(311); 
+                plot(time,y,time,t);title('y vs t'); xlabel('Time');legend('y','t');
+                aa=axis; axis([min(time) max(time) aa(3:4)]);
+                grid on;
+                
+                subplot(312); 
+                plot(time,dy,time,dt);title('dy vs dt'); xlabel('Time');legend('dy','dt');
+                aa=axis; axis([min(time) max(time) aa(3:4)]);
+                grid on;
+                
+                subplot(313); 
+                plot(time,ddy,time,ddt);title('ddy vs ddt'); xlabel('Time');legend('ddy','ddt');
+                aa=axis; axis([min(time) max(time) aa(3:4)]);
+                grid on;
+            end
         end
     end
     
