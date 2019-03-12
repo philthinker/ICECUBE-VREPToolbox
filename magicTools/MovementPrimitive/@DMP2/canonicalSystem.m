@@ -7,14 +7,13 @@ dt = obj.dt;
 tau = obj.tau;
 alpha = obj.alphax;
 
-T = 1/tau;
 M = floor(tau/dt);
 x = zeros(M,1);
 dx = zeros(M,1);
 x(1) = 1;
 
 for i = 1:M-1
-    dx(i) = -T*alpha*x(i);
+    dx(i) = -(1/tau)*alpha*x(i);
     x(i+1) = x(i) + dx(i)*dt;
 end
 

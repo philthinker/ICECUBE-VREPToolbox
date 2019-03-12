@@ -50,6 +50,7 @@ classdef DMP2
             disp(strcat('h: ',num2str((obj.h)')));
         end
         function [] = plot(obj,x,Y)
+            % It is highly recommended to run the DMP firstly.
             time = linspace(0,obj.tau,size(x,1));
             
             figure(1);clf;
@@ -91,56 +92,52 @@ classdef DMP2
             plot(time,fx);ylabel('f(x)'); xlabel('Time');
             aa=axis; axis([min(time) max(time) aa(3:4)]);
         end
-        function [] = plotCompare(obj,tar,dtar,ddtar)
+        function [] = plotCompare(obj,Y,Target,tau)
             % Show the divergence between target trajectory and learned trajectory
-            if nargin < 4
-                ddtar = tar(:,3);
-                dtar = tar(:,2);
-                tar = tar(:,1);
-            end
-            time = linspace(0,obj.tau,size(tar,1));
+            ddtar = Target(:,3);
+            dtar = Target(:,2);
+            tar = Target(:,1);
+            time = linspace(0,tau,size(tar,1));
             
             figure(3);clf;
             
             subplot(311);
-            plot(time,obj.y(:,1),time,tar);title('y vs t'); xlabel('Time');legend('y','t');
+            plot(time,Y(:,1),time,tar);title('y vs t'); xlabel('Time');legend('y','t');
             aa=axis; axis([min(time) max(time) aa(3:4)]);
             grid on;
             
             subplot(312);
-            plot(time,obj.y(:,2),time,dtar);title('dy vs dt'); xlabel('Time');legend('dy','dt');
+            plot(time,Y(:,2),time,dtar);title('dy vs dt'); xlabel('Time');legend('dy','dt');
             aa=axis; axis([min(time) max(time) aa(3:4)]);
             grid on;
             
             subplot(313);
-            plot(time,obj.y(:,3),time,ddtar);title('ddy vs ddt'); xlabel('Time');legend('ddy','ddt');
+            plot(time,Y(:,3),time,ddtar);title('ddy vs ddt'); xlabel('Time');legend('ddy','ddt');
             aa=axis; axis([min(time) max(time) aa(3:4)]);
             grid on;
         end
         %   Learn
-        function obj = LWR(obj,tau,y,dy,ddy)
+        function obj = LWR(obj,tau,Y)
             % Locally weighted regression
             % J_i = \sum_{t=1}^{T}psi_i(t)(f(t)-w_i xi(t))^2
             % J_i = (f_target - w_i S)'Tau_i(f_target - w_i S)
             % Assume that the trajectory is complete
-            if nargin < 5
-                ddy = y(:,3);
-                dy = y(:,2);
-                y = y(:,1);
-            end
+            ddy = Y(:,3);
+            dy = Y(:,2);
+            y = Y(:,1);
             % Compute x for scaled time
             obj.tau = tau;
             obj.dt = tau/size(y,1);
-            obj.x = obj.canonicalSystem();
+            x = obj.canonicalSystem();
             % Compute f_target, basis S
             % y: M x 1
-            f_target = (obj.tau)*(obj.tau)*ddy - obj.alpha*(obj.beta*(obj.g-y)-(obj.tau)*dy);
             obj.g = y(end); obj.y0 = y(1);
-            S = obj.x.*(obj.g-obj.y0)';
+            f_target = tau*tau*ddy - obj.alpha*(obj.beta*(obj.g-y)-tau*dy);
+            S = x.*(obj.g-obj.y0)';
             % Compute Tau_i and w_i
             obj.w = zeros(obj.N,1);
             for i = 1:obj.N
-                Tau = diag(obj.GaussianBasis(obj.c(i),obj.h(i)));
+                Tau = diag(obj.GaussianBasis(x, obj.c(i),obj.h(i)));
                 obj.w(i) = (S'*Tau*S)\S'*Tau*f_target;
             end
         end
