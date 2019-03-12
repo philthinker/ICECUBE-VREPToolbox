@@ -2,11 +2,11 @@
 
 Haopeng Hu
 
-2018.10.09
+2019.03.09
 
 A toolbox designed for V-REP remote API MATLAB applications.
 
-v2.4.0
+v2.4.1
 
 ## Introduction
 
@@ -14,7 +14,7 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
 - The toolbox has been tested on **MATLAB2016b**.
 
-- Functions in earlier ICECUBE are not supported from now on.
+- Functions in earlier ICECUBE are not supported.
 
 ## Install
 

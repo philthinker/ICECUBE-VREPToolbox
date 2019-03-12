@@ -1,8 +1,8 @@
 % loadICECUBE
-% Add all the necessary paths
+% Add all the necessary paths to your workspace
 
 % Haopeng Hu
-% 2018.06.25
+% 2019.03.09
 
 %% Initialize in the toolbox
 % For development only
@@ -12,6 +12,9 @@ addpath('robotTools');
 addpath('robotTools\UR5VREPTools');
 addpath('robotTools\RG2VREPTools');
 addpath('efficiencyTools');
+addpath('efficiencyTools\PlotTools');
+addpath('efficiencyTools\RigidBodyTools');
+addpath('efficiencyTools\UR5Tools');
 addpath('magicTools');
 addpath('magicTools\MovementPrimitive\');
 addpath('Demos\');
@@ -20,8 +23,4 @@ addpath('Demos\');
 % For your applications
 
 % addpath('ICECUBE-VREPToolbox');
-% addpath('ICECUBE-VREPToolbox\vrepTools');
-% addpath('ICECUBE-VREPToolbox\robotTools');
-% addpath('ICECUBE-VREPToolbox\robotTools\UR5VREPTools');
-% addpath('ICECUBE-VREPToolbox\robotTools\RG2VREPTools');
-% addpath('ICECUBE-VREPToolbox\sensorTools');
+% loadICECUBE;

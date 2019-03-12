@@ -65,16 +65,16 @@
 
 %% Learn a 1D trajectory
 
-% % Initialize a minimal jerk trajectory
-% load('Data\SimpleMinJerk.mat')
-dmp = DMP(25,5,5,50);  % alpha, beta, alphax, N
-% Learn a trajectory
-dmp = dmp.BatchLearnLWR(T(:,1),T(:,2),T(:,3));
-% Run it
-tau = 1;
-[y,dy,ddy,x,dx,f] = dmp.run(tau);
-% % Show the plots
-% dmp.plot(x,y,dy,ddy,tau);
+% % % Initialize a minimal jerk trajectory
+% % load('Data\SimpleMinJerk.mat')
+% dmp = DMP(25,5,5,40);  % alpha, beta, alphax, N
+% % Learn a trajectory
+% dmp = dmp.BatchLearnLWR(T(:,1),T(:,2),T(:,3));
+% % Run it
+% tau = 1;
+% [y,dy,ddy,x,dx,f] = dmp.run(tau);
+% % % Show the plots
+% % dmp.plot(x,y,dy,ddy,tau);
 % dmp.plotGaussian(x,f,tau);
-% Comparison
-dmp.plotComparison(y,dy,ddy,T(:,1),T(:,2),T(:,3),tau);
+% % Comparison
+% dmp.plotComparison(y,dy,ddy,T(:,1),T(:,2),T(:,3),tau);

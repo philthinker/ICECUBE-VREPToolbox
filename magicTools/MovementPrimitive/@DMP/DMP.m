@@ -136,7 +136,7 @@ classdef DMP
         function [Gs] = plotGaussian(obj,x,f,tau)
             time = linspace(0,tau,size(f,1));
             Gs = zeros(size(f,1),obj.N);    % Gaussian kernels
-            % Compute the kernels
+            % Compute the basis
             for i = 1:obj.N
                 Gs(:,i) = obj.GaussianKernel(x,obj.cs(i),obj.hs(i));
             end
@@ -147,7 +147,7 @@ classdef DMP
 %             aa=axis; axis([min(x) max(x) aa(3:4)]);
             
             subplot(211);
-            plot(time,Gs);title('Gaussian kernels'); xlabel('Time');
+            plot(time,Gs);title('Gaussian basis'); xlabel('Time');
             aa=axis; axis([min(x) max(x) aa(3:4)]);
             
             subplot(212);
