@@ -3,6 +3,7 @@ classdef DMP2
     %   Designed for discrete movement only (temporally)
     %   Haopeng Hu
     %   2019.03.10
+    %   All rights reserved.
     
     %   tau * dx = -alphax * x, x0 = 1;
     %   tau * dy = z,
@@ -43,15 +44,16 @@ classdef DMP2
         end
         %   Display
         function [] = DMPDisplay(obj)
+            % Display the private properties.
             disp(strcat('alpha: ',num2str(obj.alpha)));
             disp(strcat('beta: ',num2str(obj.beta)));
             disp(strcat('alphax: ',num2str(obj.alphax)));
             disp(strcat('c: ',num2str((obj.c)')));
             disp(strcat('h: ',num2str((obj.h)')));
         end
-        function [] = plot(obj,x,Y)
+        function [] = plot(obj,x,Y,tau)
             % It is highly recommended to run the DMP firstly.
-            time = linspace(0,obj.tau,size(x,1));
+            time = linspace(0,tau,size(x,1));
             
             figure(1);clf;
             
@@ -75,8 +77,9 @@ classdef DMP2
             aa=axis; axis([min(time) max(time) aa(3:4)]);
             grid on;
         end
-        function [] = plotGaussian(obj,x,fx)
-            time = linspace(0,obj.tau,size(fx,1));
+        function [] = plotGaussian(obj,x,fx,tau)
+            % Show the Gaussian basis and forcing function
+            time = linspace(0,tau,size(fx,1));
             Gs = zeros(size(fx,1),obj.N);    % Gaussian basis
             % Compute the basis
             for i = 1:obj.N
@@ -143,6 +146,7 @@ classdef DMP2
         end
         %   Run
         function [Y,x,fx] = run(obj,y0,g,tau,dt)
+            % Run the DMP with specified parameters
             if nargin == 5
                 %   Run DMP with unmodified dt
                 obj.dt = dt(1,1);

@@ -17,7 +17,7 @@ classdef ICECUBE
     
     methods
         function obj = ICECUBE(step,TIMEOUT)
-            disp('Connecting to V-REP service ...(ICECUBE v2.3.0)');
+            disp('Connecting to V-REP service ...(ICECUBE v2.4.1)');
             obj.step = step;
             obj.TIMEOUT = TIMEOUT;
             obj.vrep = remApi('remoteApi');     % Use remoteApiProto.m

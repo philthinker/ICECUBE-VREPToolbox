@@ -6,8 +6,8 @@
 
 % dmp = DMP2(25,5,8,40);
 % [Y,x,fx] = dmp.run(0,1,1);
-% dmp.plot(x,Y);
-% dmp.plotGaussian(x,fx);
+% dmp.plot(x,Y,1);
+% dmp.plotGaussian(x,fx,1);
 
 %% Learn a minimal jerk trajectory
 
@@ -15,6 +15,6 @@
 dmp = DMP2(25,5,8,100);
 dmp = dmp.LWR(1,T);
 [Y,x,fx] = dmp.run(T(1,1),T(end,1),1);
-dmp.plot(x,Y);
-dmp.plotGaussian(x,fx);
+dmp.plot(x,Y,1);
+dmp.plotGaussian(x,fx,1);
 dmp.plotCompare(Y,T,1);
