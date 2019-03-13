@@ -35,6 +35,5 @@ end
 % Stop the stream
 [~,~] = icecube.vrep.simxReadForceSensor(icecube.clientID,icecube.handles.ur5connector,icecube.vrep.simx_opmode_discontinue);
 
-
 end
 

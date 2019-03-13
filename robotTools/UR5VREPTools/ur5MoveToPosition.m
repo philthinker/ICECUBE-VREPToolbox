@@ -2,7 +2,7 @@ function [  ] = ur5MoveToPosition( icecube, targetPosition )
 %ur5MoveToPosition Reflexxes Motion Library - Move by ik group - position
 % icecube: the icecube object
 % targetPosition: 1 x 3 vector, the target xyz position
-% Use 'ur5MoveToPosition' instead for more efficiency.
+% Use 'ur5MoveToConfiguration.m' for more efficiency
 
 % ICECUBE Communication Protocol v2.0
 % Haopeng Hu
