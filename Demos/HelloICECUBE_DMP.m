@@ -101,65 +101,65 @@
 
 %% Learn the demo by 6 DMPs
 
-demoTraj2Learn = demoTraj_rml;
-dmpTraj = cell(1,6); x = cell(1,6); fx = cell(1,6);
-tau = 1;dt = step;
-for i = 1:6
-    dmp(i) = dmp(i).LWR(tau,demoTraj2Learn{i});
-    % Run it once for the next step to see the performance (Not necessary)
-    [dmpTraj{i},x{i},fx{i}] = dmp(i).run(demoTraj2Learn{i}(1,1),demoTraj2Learn{i}(end,1),tau,dt); 
-end
-clear i
+% demoTraj2Learn = demoTraj_rml;
+% dmpTraj = cell(1,6); x = cell(1,6); fx = cell(1,6);
+% tau = 1;dt = step;
+% for i = 1:6
+%     dmp(i) = dmp(i).LWR(tau,demoTraj2Learn{i});
+%     % Run it once for the next step to see the performance (Not necessary)
+%     [dmpTraj{i},x{i},fx{i}] = dmp(i).run(demoTraj2Learn{i}(1,1),demoTraj2Learn{i}(end,1),tau,dt); 
+% end
+% clear i
 
 %% Plot the learned trajectory (Wanna see the performance?)
 
-i = 6;
-dmp(i).plot(x{i},dmpTraj{i},tau);
-dmp(i).plotGaussian(x{i},fx{i},tau);
-% dmp(i).plotCompare(dmpTraj{i},demoTraj2Learn{i},tau);
-clear i
+% i = 6;
+% dmp(i).plot(x{i},dmpTraj{i},tau);
+% dmp(i).plotGaussian(x{i},fx{i},tau);
+% % dmp(i).plotCompare(dmpTraj{i},demoTraj2Learn{i},tau);
+% clear i
 
 %% Reuse the dmp to drive the UR5 in V-REP scene (path follower)
 
-% % Now you can just rescale the duration tau to speed up or slow down it.
-% T = 10;
-% goal = targetJoints + [0,0,0,0,0,0];
-% 
-% % Initialize ICECUBE
-% icecube = ICECUBE(step,TIMEOUT);
-% % Get UR5's handles
-% icecube = icecube.getUR5Handles();
-% icecube.start();
-% 
-% % Move the initial configuration
-% ur5MoveToJointPosition(icecube,initConfig);
-% pause(1);
-% 
-% % Run the DMPs to generate a 6-DoF trajectory
-% tempTraj = cell(1,6); tempX = cell(1,6); tempFx = cell(1,6);
-% for i = 1:6
-%     [tempTraj{i},tempX{i},tempFx{i}] = dmp(i).run(initConfig(i),goal(i),T);
-% end
-% % Transform to V-REP joint space trajectory
-% tempJointTraj = zeros(size(tempTraj{1},1),6);
-% for i = 1:6
-%     tempJointTraj(:,i) = tempTraj{i}(:,1);
-% end
-% % Run the robot to follow the path tempJointTraj
-% for i = 1:size(tempJointTraj,1)
-%     ur5SetToJointPosition(icecube,tempJointTraj(i,:));
-% end
-% pause(2);
-% 
-% icecube.stop();
-% icecube.delete();
-% 
-% % Plot
-% i = 1;
-% dmp(i).plot(tempX{i},tempTraj{i},T);
-% dmp(i).plotGaussian(tempX{i},tempFx{i},T)
-% 
-% clear ans icecube i
+% Now you can just rescale the duration tau to speed up or slow down it.
+T = 10;
+goal = targetJoints + [0,-0.1,0.1,0,0,0];
+
+% Initialize ICECUBE
+icecube = ICECUBE(step,TIMEOUT);
+% Get UR5's handles
+icecube = icecube.getUR5Handles();
+icecube.start();
+
+% Move the initial configuration
+ur5MoveToJointPosition(icecube,initConfig);
+pause(1);
+
+% Run the DMPs to generate a 6-DoF trajectory
+tempTraj = cell(1,6); tempX = cell(1,6); tempFx = cell(1,6);
+for i = 1:6
+    [tempTraj{i},tempX{i},tempFx{i}] = dmp(i).run(initConfig(i),goal(i),T);
+end
+% Transform to V-REP joint space trajectory
+tempJointTraj = zeros(size(tempTraj{1},1),6);
+for i = 1:6
+    tempJointTraj(:,i) = tempTraj{i}(:,1);
+end
+% Run the robot to follow the path tempJointTraj
+for i = 1:size(tempJointTraj,1)
+    ur5SetToJointPosition(icecube,tempJointTraj(i,:));
+end
+pause(2);
+
+icecube.stop();
+icecube.delete();
+
+% Plot
+i = 1;
+dmp(i).plot(tempX{i},tempTraj{i},T);
+dmp(i).plotGaussian(tempX{i},tempFx{i},T)
+
+clear ans icecube i
 
 %% Notation
 % % You can load 'Demo\Data\HelloICECUBE_DMP.mat'to quickly access to the

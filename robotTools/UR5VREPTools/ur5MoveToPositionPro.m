@@ -11,6 +11,8 @@ function [ joints ] = ur5MoveToPositionPro( icecube, targetPosition )
 % Haopeng Hu
 % 2018.07.13
 
+% %%%% DEPRECATED %%%%
+
 targetQuaternion = ur5GetIKTipQuaternion(icecube);
 targetQuaternion = toVREPQuat(targetQuaternion);
 joints = zeros(icecube.TIMEOUT,6);

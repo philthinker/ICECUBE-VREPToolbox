@@ -12,7 +12,7 @@
 %% Learn a minimal jerk trajectory
 
 % load('Data\SimpleMinJerk.mat');
-dmp = DMP2(25,5,8,100);
+dmp = DMP2(25,5,8,10);
 dmp = dmp.LWR(1,T);
 [Y,x,fx] = dmp.run(T(1,1),T(end,1),1);
 dmp.plot(x,Y,1);

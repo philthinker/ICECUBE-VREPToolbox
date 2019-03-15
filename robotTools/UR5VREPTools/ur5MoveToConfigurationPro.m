@@ -11,6 +11,8 @@ function [ joints ] = ur5MoveToConfigurationPro( icecube, targetPosition, target
 % Haopeng Hu
 % 2018.07.05
 
+% %%%% DEPRECATED %%%%
+
 targetQuaternion = toVREPQuat(targetQuaternion);
 joints = zeros(icecube.TIMEOUT,6);
 
