@@ -16,7 +16,7 @@ while i < obj.TIMEOUT && ur5ready == 0
     pause(obj.step);
 end
 if i>= obj.TIMEOUT
-    disp('An error occurred in your V-REP server');
+    disp('An error occurred in the V-REP server');
     obj.vrep.simxFinish(obj.clientID);
     obj.vrep.delete();
     res = obj.vrep.simx_error_timeout_flag;

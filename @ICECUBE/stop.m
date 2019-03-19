@@ -4,9 +4,9 @@ function [ res ] = stop( obj )
 
 % @ICECUBE
 
-% ICECUBE Communication Protocol v2.0
+% ICECUBE Communication Protocol v3.0
 % disp('Stop the simulation ...');
-res = obj.vrep.simxSetIntegerSignal(obj.clientID, 'ICECUBE_0', 01, obj.vrep.simx_opmode_blocking);
+res = obj.vrep.simxSetIntegerSignal(obj.clientID, 'ICECUBE_0', 1, obj.vrep.simx_opmode_blocking);
 pause(0.5);
 
 

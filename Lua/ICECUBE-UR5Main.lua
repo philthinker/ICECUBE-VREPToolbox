@@ -1,5 +1,5 @@
 -- Threaded Child Script
--- ICECUBE Communication Protocal v2.0
+-- ICECUBE Communication Protocal v3.0
 -- Attach these scripts to UR5 in V-REP scene.
 
 enableIk=function(enable)
@@ -95,7 +95,7 @@ function sysCall_threadmain(  )
 
     sim.setIntegerSignal('IKEnable', 0)         -- The sign for ik mechanism
     
-    -- The ICECUBE Communication Protocol v2.0
+    -- The ICECUBE Communication Protocol v3.0 - Rooibos
     sim.setIntegerSignal('ICECUBE_0', 0)
     for i = 1,7,1 do
         sim.setFloatSignal('ICECUBE_'..i, 0.000000)
@@ -107,38 +107,32 @@ function sysCall_threadmain(  )
     sim.addStatusbarMessage('The UR5 is ready to move!')
 
     while true do
-        -- The ICECUBE Communication Protocol v2.0
+        -- The ICECUBE Communication Protocol v3.0 - Rooibos
         local icecubeCMD = sim.getIntegerSignal('ICECUBE_0')
-        local coarseCMD = math.floor( icecubeCMD/10 )
-        local fineCMD = icecubeCMD % 10
-        if coarseCMD == 0 then
+        if icecubeCMD == 0 then
             -- Default
-            if fineCMD == 1 then
-                -- Stop the simulation
-                break
-            else
-                sim.wait(0.1)
-            end
-        elseif coarseCMD == 1 then
+            sim.wait(0.1)
+        elseif icecubeCMD == 1 then
+            -- Stop the simulation
+            break
+        elseif icecubeCMD == 2 then
             -- Joint Motion Plan
             for i = 1,6,1 do
                 rmlJoints[i] = sim.getFloatSignal('ICECUBE_'..i)
             end
-            if fineCMD == 1 then 
-                -- Simple point-to-point joint motion plan
-                ICECUBErmlMoveToJointPositions(rmlJoints)
-                sim.setIntegerSignal('ICECUBE_0', 0)
-            end
-        elseif coarseCMD == 2 then
+            ICECUBErmlMoveToJointPositions(rmlJoints)
+            sim.setIntegerSignal('ICECUBE_0', 0)
+        elseif icecubeCMD == 3 then
             -- Cartesian Motion Plan
             for i = 1,7,1 do
                 rmlPosQua[i] = sim.getFloatSignal('ICECUBE_'..i)
             end
-            if fineCMD == 1 then
-                -- Simple point-to-point cartesian motion plan
-                ICECUBErmlMoveToPosition(rmlPosQua)
-                sim.setIntegerSignal('ICECUBE_0',0)
-            end
+            ICECUBErmlMoveToPosition(rmlPosQua)
+            sim.setIntegerSignal('ICECUBE_0',0)
+        elseif icecubeCMD == 4 then
+            -- Force/Torque Control
+        elseif icecubeCMD == 5 then
+            -- Rewrite Joint Callback function
         end
     end
     sim.stopSimulation()

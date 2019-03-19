@@ -8,7 +8,7 @@ function [  ] = ur5MoveToJointPosition( icecube, targetPositions )
 % 2018.07.05
 
 icecube.vrep.simxPauseCommunication(icecube.clientID, 1);
-icecube.vrep.simxSetIntegerSignal(icecube.clientID, 'ICECUBE_0', 11, icecube.vrep.simx_opmode_oneshot);
+icecube.vrep.simxSetIntegerSignal(icecube.clientID, 'ICECUBE_0', 2, icecube.vrep.simx_opmode_oneshot);
 for i = 1:6
     icecube.vrep.simxSetFloatSignal(icecube.clientID, strcat('ICECUBE_',int2str(i)), targetPositions(i), icecube.vrep.simx_opmode_oneshot);
 end

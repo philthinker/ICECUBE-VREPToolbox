@@ -4,13 +4,11 @@ function [  ] = ur5MoveToConfiguration( icecube, targetPosition, targetQuaternio
 % targetPosition: 1 x 3 vector, the target xyz position
 % targetQuaternion: 1 x 4 vector, the target quaternion
 
-% ICECUBE Communication Protocol v2.0
-% Haopeng Hu
-% 2018.07.05
+% ICECUBE Communication Protocol v3.0
 
 targetQuaternion = toVREPQuat(targetQuaternion);
 icecube.vrep.simxPauseCommunication(icecube.clientID, 1);
-icecube.vrep.simxSetIntegerSignal(icecube.clientID, 'ICECUBE_0', 21, icecube.vrep.simx_opmode_oneshot);
+icecube.vrep.simxSetIntegerSignal(icecube.clientID, 'ICECUBE_0', 3, icecube.vrep.simx_opmode_oneshot);
 for i = 1:3
     icecube.vrep.simxSetFloatSignal(icecube.clientID, strcat('ICECUBE_',int2str(i)), targetPosition(i), icecube.vrep.simx_opmode_oneshot);
 end
