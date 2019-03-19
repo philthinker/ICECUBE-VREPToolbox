@@ -64,7 +64,7 @@ ICECUBErmlMoveToPosition = function(inFloats)
 end
 
 function sysCall_threadmain(  )
-    sim.setThreadSwitchTiming(100)
+    sim.setThreadSwitchTiming(200)
     sim.setIntegerSignal('UR5READY', 0)
     -- Initialize some values:
     jointHandles={-1,-1,-1,-1,-1,-1}
@@ -117,7 +117,7 @@ function sysCall_threadmain(  )
                 -- Stop the simulation
                 break
             else
-                sim.wait(0.2)
+                sim.wait(0.1)
             end
         elseif coarseCMD == 1 then
             -- Joint Motion Plan

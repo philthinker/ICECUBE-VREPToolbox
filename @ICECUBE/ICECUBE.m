@@ -18,7 +18,7 @@ classdef ICECUBE
     methods
         function obj = ICECUBE(step,TIMEOUT)
             disp('Connecting to V-REP service ...(ICECUBE v2.4.1)');
-            obj.step = step;
+            obj.step = step;    % Recommended 0.05
             obj.TIMEOUT = TIMEOUT;
             obj.vrep = remApi('remoteApi');     % Use remoteApiProto.m
             obj.vrep.simxFinish(-1);            % Stop other connections
@@ -29,7 +29,7 @@ classdef ICECUBE
             if obj.clientID > -1    % Connected!
                 disp('V-REP service is connected!');
                 obj.handles = struct('ID',obj.clientID);
-                obj.vrep.simxAddStatusbarMessage(obj.clientID,'A MATLAB client is found (ICECUBE 2.3)',obj.vrep.simx_opmode_oneshot);
+                obj.vrep.simxAddStatusbarMessage(obj.clientID,'A MATLAB client is found (ICECUBE 2.4.1)',obj.vrep.simx_opmode_oneshot);
             else
                 disp('Failed connecting to remote API server');
                 obj.vrep.delete();

@@ -16,5 +16,7 @@ icecube.vrep.simxPauseCommunication(icecube.clientID, 0);
 end
 
 % Note that when we use setJointPosition function, it is recommended by the
-% official manual to set the Joint Mode as 'Passive mode'. But until now,
-% no error occurred if we did not do that.
+% official manual to set the Joint Mode as 'Passive mode'. 
+% When the joint's model is Torque/force mode, use 
+%   simxSetJointTargetPosition
+% instead and enable the control loop.

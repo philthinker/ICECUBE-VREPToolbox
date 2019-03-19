@@ -12,7 +12,7 @@
 %% Initialization
 
 % % Initialize ICECUBE
-% step = 0.001;
+% step = 0.05;
 % TIMEOUT = 10000;
 % icecube = ICECUBE(step,TIMEOUT);
 % % Get UR5's handles
