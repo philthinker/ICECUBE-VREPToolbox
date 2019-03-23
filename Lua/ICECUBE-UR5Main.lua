@@ -137,3 +137,8 @@ function sysCall_threadmain(  )
     end
     sim.stopSimulation()
 end
+
+function sysCall_cleanup()
+    sim.setIntegerSignal('ICECUBE_0',0)
+    sim.setIntegerSignal('UR5READY',0)
+end

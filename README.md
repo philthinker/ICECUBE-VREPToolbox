@@ -2,11 +2,11 @@
 
 Haopeng Hu
 
-2019.03.13
+2019.03.19
 
 A toolbox designed for V-REP remote API MATLAB applications.
 
-v2.5.0
+v3.0.0
 
 ## Introduction
 
@@ -14,7 +14,7 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
 - The toolbox has been tested on **MATLAB2016b** and **V-REP 3.6.0 EDU**.
 
-- Functions in version earlier than 2.4.1 are tested on V-REP 3.5.0 which will not be supported.
+- Functions in earlier version are not supported.
 
 ## Install
 
@@ -22,8 +22,7 @@ The ICECUBE-VREPToolbox is designed for acceleration of V-REP + MATLAB applicati
 
 - For MATLAB users, clone the master branch anywhere you want. Run 'loadICECUBE.m' out of ICECUBE-VREPToolbox and trim the files based on your requirement.
 
-- For ICECUBE v2.35 users, follow the sequence: **ICECUBE() -> ICECUBE.start() -> ICECUBE.stop() -> ICECUBE.delele()** whenever you use the toolbox.
-
+- Always follow the sequence: **ICECUBE() -> ICECUBE.start() -> ICECUBE.stop() -> ICECUBE.delele()** whenever you use the toolbox.
 
 ## Demo
 
@@ -35,4 +34,4 @@ There are two demos as well as two V-REP scenes available:
 
  3. Run "magicTools\MovementPrimitive\DMP_demo.m" the learn the use of @DMP.
 
- *No sprite, no summer!*
+### Rooibos goes well with nights of silence
