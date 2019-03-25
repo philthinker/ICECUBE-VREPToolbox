@@ -2,11 +2,11 @@
 
 Haopeng Hu
 
-2019.03.19
+2019.03.25
 
 A toolbox designed for V-REP remote API MATLAB applications.
 
-v3.0.0
+v3.0.1
 
 ## Introduction
 
@@ -31,7 +31,5 @@ There are two demos as well as two V-REP scenes available:
  1. Open the "UR5PickAndPlace.ttt" scene and run "Demo\HelloICECUBE_PickAndPlace.m".
 
  2. Open the "UR5PegInHole.ttt" scene and run "Demo\HelloICECUBE_PegInHole.m".
-
- 3. Run "magicTools\MovementPrimitive\DMP_demo.m" the learn the use of @DMP.
 
 ### Rooibos goes well with nights of silence

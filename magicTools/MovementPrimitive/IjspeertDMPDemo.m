@@ -1,19 +1,19 @@
-%   DMP2Demo
-%   Haopeng Hu
-%   2019.03.11
+% IjspeertDMPDemo
+% Haopeng Hu
+% 2019.03.25
 
 %% Run an empty DMP
 
-dmp = DMP2(25,5,6,40);
-[Y,x,fx] = dmp.run(0,1,1);
-dmp.plot(x,Y,1);
-dmp.plotGaussian(x,fx,1);
+% dmp = IjspeertDMP(6, 25,5,40, 0.001);
+% [Y,x,fx] = dmp.run(0,1,1);
+% dmp.plot(x,Y,1);
+% dmp.plotGaussian(x,fx,1);
 
 %% Learn a minimal jerk trajectory
 
 % % load('Data\SimpleMinJerk.mat');
-% dmp = DMP2(25,5,6,40);
-% dmp = dmp.LWR(1,T);
+% dmp = IjspeertDMP(6, 25,5,40, 0.001);
+% dmp = dmp.LWR(T,1);
 % [Y,x,fx] = dmp.run(T(1,1),T(end,1),1);
 % dmp.plot(x,Y,1);
 % dmp.plotGaussian(x,fx,1);
@@ -28,4 +28,3 @@ dmp.plotGaussian(x,fx,1);
 % [Y,x,fx] = dmp.run(0,100,1);
 % dmp.plot(x,Y,1);
 % dmp.plotGaussian(x,fx,1);
-

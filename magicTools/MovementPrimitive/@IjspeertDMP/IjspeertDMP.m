@@ -1,63 +1,55 @@
-classdef SchaalDMP
-    %Stefan Schaal's Modified Dynamic Movement Primitve
+classdef IjspeertDMP
+    %IjspeertDMP Ijspeert's dynamic movement primitive
     %   Designed for discrete movement only (temporally)
     %   Haopeng Hu
-    %   2019.03.22
+    %   2019.03.25
     %   All rights reserved.
     
-    %   tau * dx = -alphas * x, x0 = 1
-    %   tau * dy = z
-    %   tau * dz = K * (g - y) - D * z - K * (g - y0) * x  + K * f(x)
-    
-    properties (Access = private)
-        y0;     % Start position
-        g;      % Goal position
-        tau;    % Temporal scalar
-        dt;     % Time step
-        c;      % Centers of the Gaussian basis
-        h;      % Variance of the Gaussian basis
-        N;      % Number of Gaussian basis
+    properties (Access = public)
+        w;          % weights
+        alpha;      % alpha of dynamic system
+        beta;       % beta of dynamic system
+        alphax;     % alphax of the canonical system
     end
     
-    properties (Access = public)
-        K;      % K of dynamic system
-        D;      % D of dynamic system
-        alphax; % alphax of the canonical system
-        w;      % Weights
+    properties (Access = private)
+        c;          % centers of the Gaussian basis
+        h;          % variance of the Gaussian basis
+        N;          % number of Gaussian basis
+        g;          % goal
+        y0;         % initial state
+        tau;        % temporal scalor
+        dt;         % time step
     end
     
     methods (Access = public)
-        % Initialization alphax>0, D>0, K>0, K<D^2/4
-        function obj = SchaalDMP(alphax,K,D,N,dt)
-            % Only 1D DMP is supported
-            % Assigned properties (May not vary any more)
-            obj.alphax = alphax(1,1);
-            obj.K = K(1,1);
-            obj.D = D(1,1);
+        function obj = IjspeertDMP(alphax,alpha,beta,N,dt)
+            %   Only 1D DMP is supported
+            %   alpha > 4 * beta is a scaler, so is alphax
+            obj.alpha = alpha(1,1); obj.beta = beta(1,1); obj.alphax = alphax(1,1);
             obj.N = ceil(N);
-            obj.dt = dt(1,1);
-            % Default properties
-            obj.tau = 1;
-            obj.y0 = 0;
+            obj.dt = dt;
+            %   Default public variables
+            obj.w = zeros(N,1);
             obj.g = 0;
-            obj.w = zeros(obj.N,1);
-            % Gaussian basis
+            obj.y0 = 0;
+            obj.tau = 1;
+            obj.dt = 0.001;
+            %   Default Gaussian basis
             x = obj.canonicalSystem();
             [obj.c, obj.h] = obj.GaussiansAssign(x);
         end
-        % Display
-        function [] = DMPdisplay(obj)
-            % Display the main parameters of the DMP
-            disp(strcat('K: ',num2str(obj.K)));
-            disp(strcat('D: ',num2str(obj.D)));
+        %   Display
+        function [] = DMPDisplay(obj)
+            % Display the private properties.
+            disp(strcat('alpha: ',num2str(obj.alpha)));
+            disp(strcat('beta: ',num2str(obj.beta)));
             disp(strcat('alphax: ',num2str(obj.alphax)));
             disp(strcat('c: ',num2str((obj.c)')));
             disp(strcat('h: ',num2str((obj.h)')));
         end
-        % Plot
         function [] = plot(obj,x,Y,tau)
-            % Please run the method obj.run first to obtain x and Y
-            % tau is exactly the one used in obj.run
+            % It is highly recommended to run the DMP firstly.
             time = linspace(0,tau,size(x,1));
             
             figure(1);clf;
@@ -83,7 +75,7 @@ classdef SchaalDMP
             grid on;
         end
         function [] = plotGaussian(obj,x,fx,tau)
-            % Show the Gaussians of the DMP
+            % Show the Gaussian basis and forcing function
             time = linspace(0,tau,size(fx,1));
             Gs = zeros(size(fx,1),obj.N);    % Gaussian basis
             % Compute the basis
@@ -100,13 +92,11 @@ classdef SchaalDMP
             plot(time,fx);ylabel('f(x)'); xlabel('Time');
             aa=axis; axis([min(time) max(time) aa(3:4)]);
         end
-        function [] = plotCompare(obj,Y,T,tau)
-            % Compare the learned trajectory Y and the target T
-            % Please run the method obj.run first to obtain the Y
-            % tau is exactly the one used in learning and running method
-            ddtar = T(:,3);
-            dtar = T(:,2);
-            tar = T(:,1);
+        function [] = plotCompare(obj,Y,Target,tau)
+            % Show the divergence between target trajectory and learned trajectory
+            ddtar = Target(:,3);
+            dtar = Target(:,2);
+            tar = Target(:,1);
             time = linspace(0,tau,size(tar,1));
             
             figure(3);clf;
@@ -126,19 +116,15 @@ classdef SchaalDMP
             aa=axis; axis([min(time) max(time) aa(3:4)]);
             grid on;
         end
-        % Learn
-        function obj = LWR(obj,T,tau)
+        %   Learn
+        function obj = LWR(obj,Y,tau)
             % Locally weighted regression
-            % T; M x 3, the target trajectory
-            % tau: temporal scalar
-            
-            % J_i = \sum_{t=1}^{TEnd}psi_i(t)(f(t)-w_i x(t))^2
+            % J_i = \sum_{t=1}^{T}psi_i(t)(f(t)-w_i xi(t))^2
             % J_i = (f_target - w_i S)'Tau_i(f_target - w_i S)
-            % f_target = (tau*dz+D*z)/K - (g-y) + (g-y0)*x
             % Assume that the trajectory is complete
-            ddy = T(:,3);
-            dy = T(:,2);
-            y = T(:,1);
+            ddy = Y(:,3);
+            dy = Y(:,2);
+            y = Y(:,1);
             % Compute x for scaled time
             obj.tau = tau;
             obj.dt = tau/size(y,1);
@@ -146,8 +132,8 @@ classdef SchaalDMP
             % Compute f_target, basis S
             % y: M x 1
             obj.g = y(end); obj.y0 = y(1);
-            f_target = (tau*tau*ddy + obj.D*tau*dy)/obj.K - (obj.g-x) + (obj.g-obj.y0)*x;
-            S = x;
+            f_target = tau*tau*ddy - obj.alpha*(obj.beta*(obj.g-y)-tau*dy);
+            S = x.*(obj.g-obj.y0)';
             % Compute Tau_i and w_i
             obj.w = zeros(obj.N,1);
             for i = 1:obj.N
@@ -155,9 +141,9 @@ classdef SchaalDMP
                 obj.w(i) = (S'*Tau*S)\S'*Tau*f_target;
             end
         end
-        % Run
+        %   Run
         function [Y,x,fx] = run(obj,y0,g,tau,dt)
-            % Run the DMP with manual arguments
+            % Run the DMP with specified parameters
             if nargin == 5
                 %   Run DMP with unmodified dt
                 obj.dt = dt(1,1);
@@ -180,14 +166,8 @@ classdef SchaalDMP
     
 end
 
-%% Appendix
-% Note that the original DMP has 3 drawbacks:
-% 1. If start and goal of a movement are the same, then the forcing term
-%    cannot drive the system away from tis initial state.
-% 2. The scaling of f with g-y0 is problematic if it is close to 0. Here,a
-%    small change in g may lead to huge accelerations.
-% 3. Whenever a movement adapts to a new goal g' s.t. g'-y0 changes its
-%    sign compared to g-y0, the resulting generalization is mirrored.
-
-% Refer to : P. Pastor, et al. Learning and Generalization of Motor Skills 
-% by Learning from Demonstration, ICRA, 2009.
+    %   The WP blogs : 
+    %   - https://studywolf.wordpress.com/2013/11/16/dynamic-movement-primitives-part-1-the-basics/
+    %   - https://studywolf.wordpress.com/2013/12/05/dynamic-movement-primitives-part-2-controlling-a-system-and-comparison-with-direct-trajectory-control/
+    %   - https://studywolf.wordpress.com/2016/05/13/dynamic-movement-primitives-part-4-avoiding-obstacles/
+    %   are very helpful for you to understand the usage of DMP.

@@ -75,29 +75,6 @@
 % % icecube.delete();
 % % clear ans i icecube T dT ddT
 
-%% Joint space interpolation (V-REP's RML method)
-
-% demoTraj_rml = ur5JointTrajExtract(tempJoints,step);
-% 
-% % % Simulation (Not necessary)
-% % T = tempJoints;
-% % icecube = ICECUBE(step,TIMEOUT);
-% % icecube = icecube.getUR5Handles();
-% % initConfig = [0, pi/8, pi/2-pi/8, 0, -pi/2, 0];
-% % icecube.start();
-% % % Move to initial configuration
-% % ur5MoveToJointPosition(icecube,initConfig);
-% % pause(1);
-% % % Follow the demo trajectory (joint space)
-% % for i = 1:size(T,1)
-% %     ur5SetToJointPosition(icecube,T(i,:));
-% %     pause(icecube.step);
-% % end
-% % pause(2);
-% % 
-% % icecube.stop();
-% % icecube.delete();
-% % clear ans i icecube T
 
 %% Learn the demo by 6 DMPs
 
