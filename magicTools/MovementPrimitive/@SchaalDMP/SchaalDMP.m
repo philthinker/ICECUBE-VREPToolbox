@@ -146,7 +146,7 @@ classdef SchaalDMP
             % Compute f_target, basis S
             % y: M x 1
             obj.g = y(end); obj.y0 = y(1);
-            f_target = (tau*tau*ddy + obj.D*tau*dy)/obj.K - (obj.g-x) + (obj.g-obj.y0)*x;
+            f_target = (tau*tau*ddy + obj.D*tau*dy)/obj.K - (obj.g-y) + (obj.g-obj.y0)*x;
             S = x;
             % Compute Tau_i and w_i
             obj.w = zeros(obj.N,1);

@@ -16,8 +16,8 @@ addpath('efficiencyTools\PlotTools');
 addpath('efficiencyTools\RigidBodyTools');
 addpath('efficiencyTools\UR5Tools');
 addpath('magicTools');
-addpath('magicTools\MovementPrimitive\');
-addpath('Demos\');
+addpath('magicTools\MovementPrimitive');
+% addpath('magicTools\SEDS');
 
 %% Initialize out of the toolbox
 % For your applications

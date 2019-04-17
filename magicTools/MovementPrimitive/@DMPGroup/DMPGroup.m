@@ -41,10 +41,26 @@ classdef DMPGroup
             obj.dmps(1).plot(x,Y,tau);
         end
         function [] = plotGaussian(obj,x,fx,tau)
-            obj.dmps(1).plotGuassian(x,fx,tau);
+            obj.dmps(1).plotGaussian(x,fx,tau);
         end
         function [] = plotCompare(obj,Y,T,tau)
             obj.dmps(1).plotCompare(Y,T,tau);
+        end
+        function [] = plot3(obj,Y)
+            % Show a 3D plot (only positions)
+            figure(4);
+            plot3(Y(:,1),Y(:,2),Y(:,3));
+            xlabel('x'); ylabel('y'); zlabel('z');
+            grid on;
+        end
+        function [] = plot3Compare(obj,Y,T)
+            % Show the leaned 3D plot and target 3D plot (only positions)
+            % It is not necessary to wrap their time to be consistent.
+            figure(5);
+            plot3(Y(:,1),Y(:,2),Y(:,3));legend('Y');
+            xlabel('x'); ylabel('y'); zlabel('z');
+            grid on; hold on;
+            plot3(T(:,1),T(:,2),T(:,3));
         end
         % Learn
         function obj = learn(obj,T,tau,index)
@@ -69,10 +85,10 @@ classdef DMPGroup
             if nargin < 5
                 % Run all the DMPs
                 M = floor(tau/obj.dt);
-                Y = zeros(M,3*obj.NUM); x = zeors(M,1); fx = zeros(M,obj.NUM);
+                Y = zeros(M,3*obj.NUM); x = zeros(M,1); fx = zeros(M,obj.NUM);
                 for i = 1:obj.NUM
                     % Run the DMPs one by one.
-                    [Y(:,((i-1)*3+1):(i*3)),x,fx(:,i)] = obj.dmps(i).run(y0,g,tau,obj.dt);
+                    [Y(:,((i-1)*3+1):(i*3)),x,fx(:,i)] = obj.dmps(i).run(y0(i),g(i),tau,obj.dt);
                 end
             else
                 % Run the index-th DMP
