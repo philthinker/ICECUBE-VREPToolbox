@@ -4,7 +4,7 @@ The source codes from LASA (EPFL).
 
 Refer to http://lasa.epfl.ch/sourcecode/#1 for more details
 
-[tof]
+[@tof]
 
 ## SEDS
 

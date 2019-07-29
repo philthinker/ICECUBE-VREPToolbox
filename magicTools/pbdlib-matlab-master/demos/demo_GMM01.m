@@ -57,7 +57,6 @@ for n=1:nbSamples
 	Data = [Data s(n).Data]; 
 end
 
-
 %% Parameters estimation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 model = init_GMM_kmeans(Data, model);
