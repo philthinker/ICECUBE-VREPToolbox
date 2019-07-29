@@ -53,12 +53,14 @@ classdef GMMZero
             %learnGMM Learn the GMM by EM
             %   Demos: 1 x D cells, demonstration data.
             Data = obj.dataRegulate(Demos);
-            
+            obj = obj.EMGMMZero(Data);
         end
         
-        function [] = plotGMM(obj)
-            %plotGMM Plot the GMM if nVar is 2
-        end
+    end
+    
+    methods (Access = public)
+        % Figures
+        h = plotGMM2SC(obj, color, valAlpha);
     end
     
     methods (Access = protected)
