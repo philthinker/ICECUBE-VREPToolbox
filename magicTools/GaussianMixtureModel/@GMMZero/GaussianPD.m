@@ -17,5 +17,6 @@ function [prob] = GaussianPD(obj, Data, Mu, Sigma)
 Data = Data' - repmat(Mu',nbData,1);
 prob = sum((Data/Sigma).*Data, 2);
 prob = exp(-0.5*prob) / sqrt((2*pi)^nbVar * abs(det(Sigma)) + realmin);
+
 end
 

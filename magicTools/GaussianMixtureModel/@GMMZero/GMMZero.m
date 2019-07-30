@@ -4,12 +4,17 @@ classdef GMMZero
     %   You must assign num. of kernels initially. Demonstration data must
     %   be aligned to vectors in cells.
     
+    %   Haopeng Hu
+    %   2019.07.29
+    %   All rights reserved
+    
     properties (Access = public)
         nKernel;        % Number of Guassian kernels (states)
         nVar;           % Number/Dimension of variables
         Mu;             % Mean values
         Sigma;          % Variances
         Prior;          % Priors
+        dt;             % Minimum time step
     end
     
     properties (Access = protected)
@@ -21,18 +26,23 @@ classdef GMMZero
     end
     
     methods (Access = public)
-        function obj = GMMZero(nKernel,nVar)
+        function obj = GMMZero(nKernel,nVar,dt)
             %GMMZero Assign num. of kernels and Demonstration data
             %   nKernel: Integer,  num. of Gaussian kernels
             %   nVar: Integer, dimension/number of variables
+            %   dt: Float, minimum time step (optional)
             obj.nKernel = nKernel;
             obj.nVar = nVar;    % We assume data are vectors
             obj.Mu = zeros(obj.nKernel,obj.nVar);
             obj.Sigma = zeros(obj.nVar,obj.nVar,obj.nKernel);
             obj.Prior = ones(obj.nKernel,1)/obj.nKernel;
+            obj.dt = 1e-3;
+            if nargin > 2
+                obj.dt = dt;
+            end
         end
         
-        function obj = initGMM(obj,Demos)
+        function obj = initGMMKMeans(obj,Demos)
             %initGMM Initialize the GMM before EM
             %   Demos: 1 x D cells, demonstration data.
             diagRegularizationFactor = 1E-2; %Optional regularization term
@@ -56,11 +66,20 @@ classdef GMMZero
             obj = obj.EMGMMZero(Data);
         end
         
+        function [eData,eSigma] = GMR(obj,queryData)
+            %GMR Gaussian Mixture Regression
+            %   queryData: N x 1, the query points (e.g. time)
+            %   eData: N x D, the expected data
+            %   eSigma: D x D x N, the expected covariances
+            [eData, eSigma] = obj.GMRZero(queryData',1,(2:obj.nVar));
+            eData = eData'; % For S. Calinon's habit
+        end
     end
     
     methods (Access = public)
         % Figures
         h = plotGMM2SC(obj, color, valAlpha);
+        h = plotGMM2GMR(obj,data,sigma,color,valAlpha);
     end
     
     methods (Access = protected)
@@ -69,6 +88,7 @@ classdef GMMZero
         [L,GAMMA] = computeGamma(obj,Data);
         [prob] = GaussianPD(obj, Data, Mu, Sigma);
         [obj,GAMMA2,LL] = EMGMMZero(obj,Data);
+        [expData, expSigma, H] = GMRZero(model, DataIn, in, out);
     end
 end
 
