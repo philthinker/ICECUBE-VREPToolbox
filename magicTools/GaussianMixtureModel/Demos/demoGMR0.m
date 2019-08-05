@@ -9,7 +9,7 @@ load('Data/LetterC.mat');
 
 %% Data initialization
 
-nSamples = 6;
+nSamples = 10;
 dt = 1e-3;
 nData = size(demos{1}.pos,2);   % Only position considered
 dData = size(demos{1}.pos,1);
@@ -22,7 +22,7 @@ end
 
 %% GMM initialization
 
-gmm = GMMZero(5,dData+1,dt);
+gmm = GMMZero(7,dData+1,dt);
 
 %% Parameters estimation
 
