@@ -79,6 +79,7 @@ classdef MarkersGroupZero
     methods (Access = protected)
         XYZ = centerCompute(obj);
         [] = plotXYCircle(obj,center,radius,color);
+        [SO3,p] = threeMarkerPos(obj,queryMarkers,originMarkers);
         SO3 = rotCompute(obj);
         SE3 = tformCompute(obj);
     end

@@ -7,7 +7,5 @@ function [SO3] = rotCompute(obj)
 
 SO3 = repmat(eye(3),[1,1,obj.N]);
 
-
-
 end
 
