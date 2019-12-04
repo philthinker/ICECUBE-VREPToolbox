@@ -4,7 +4,7 @@ Haopeng Hu
 
 2019.07.22
 
-A toolbox designed for V-REP remote API MATLAB applications.
+A toolbox designed for V-REP remote API MATLAB applications. This is the FINAL version of ICECUBE-VREPToolbox since the next version will be designed for CoppeliaSim!
 
 v3.1.0
 
